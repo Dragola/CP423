@@ -24,3 +24,11 @@ class invertedIndex:
         else:
             newSet = {document} # new set with document ID added
             self.indexList[word] = newSet # add key and set value to the new set
+
+
+'''
+add some tests to ensure class works as intended:
+ - Add a single word with 1, 2 and 5 document ID's
+ - Add a few different words (all with 1 document ID)
+ - Add a few different words with multiple ID's
+'''
