@@ -1,3 +1,9 @@
+'''
+indexList:
+ - Stores key-value pairs.
+    - the key will be the word/token for the index list
+    - the value will be a set for the word/token
+'''
 class invertedIndex:
     indexList: dict = {}
 
