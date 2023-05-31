@@ -17,9 +17,9 @@ def retrieveFiles():
 
     # loop through each file
     for file in files:
-        filePath = "./" + file # set up the path to the file
+        filePath = "./data/" + file # set up the path to the file
         text = open(filePath, "r") # open the file for reading
-        line = text.readline # get the first line
+        line = text.readline() # get the first line
 
         # keep reading lines from the file until EOF is reached
         while line != "":
@@ -33,7 +33,7 @@ def retrieveFiles():
                 invertedIndex.addIndex(word, documentId)
             
             
-            line = text.readline # get the next line in the file
+            line = text.readline() # get the next line in the file
 
         documentId += 1 # increment the document ID for the next file
 
