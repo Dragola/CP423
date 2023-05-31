@@ -11,19 +11,29 @@ class InvertedIndex:
        self.indexList = {}
     
     # adds/updates an index
-    def addIndex(self, word: str, document: int):
+    def addIndex(self, word: str, documentID: int):
 
         # check if index already exists in the dictionary
         if word in self.indexList:
-            self.indexList[word].add(document) # add document ID to existing index
+            newDocumentID = {documentID}
+            self.indexList[word].update(newDocumentID) # add document ID to existing index
 
         # if index wasn't already in list
         else:
-            newSet = {document} # create a new set and add the document ID to it
+            newSet = {documentID} # create a new set and add the document ID to it
             self.indexList[word] = newSet # add index to the dictionary with the document ID
 
-    def getDictionary(self):
-        return self.indexList
+    # sorts the set for the specified index
+    # def sortDocumentID(self):
+    #     for index in self.indexList:
+    #         sortedList = sorted(self.indexList[index])
+
+    #         self.indexList[index] = set(sortedList)
+
+
+    # gets the dictionary property
+    # def getDictionary(self):
+    #     return self.indexList
 
     # print the list of inverted index's
     def printIndex(self):

@@ -4,7 +4,8 @@ import os
 
 files: list[str] # the files that we index from
 
-def retrieveFiles():
+# read through all files, process the text, and return the inverted index
+def createInvertedIndex():
     global files
 
     invertedIndex = InvertedIndex()
@@ -31,17 +32,39 @@ def retrieveFiles():
             for word in uniqueWords:
                 invertedIndex.addIndex(word, documentId)
             
-            
             line = text.readline() # get the next line in the file
 
         text.close() # close the file after reading it
+        
 
         print("Finished document " + str(documentId)) # DEBUG ONLY
 
         documentId += 1 # increment the document ID for the next file
 
     return invertedIndex
-        
+    
+def outputInvertedIndex():
+    # output the inverted index to verify (DEBUG ONLY)
+    file = open("./InvertedIndex.txt", "w")
+
+    documentID = 1
+
+    for documentName in files:
+        file.write(documentName + "| DocumentID= " + str(documentID) + "\n")
+        documentID += 1
+
+    file.write("\n\n")
+
+    invertedIndexDictionary = invertedIndex.indexList
+    for index in invertedIndexDictionary:
+        file.write(index)
+        file.write(" --> {")
+        for documentID in invertedIndexDictionary[index]:
+            file.write(str(documentID) + ", ")
+        file.write("}- size= " + str(len(invertedIndexDictionary[index])) + "\n")
+    
+    file.close()
+
 if __name__ == "__main__":
     # process the input
     '''
@@ -51,20 +74,11 @@ if __name__ == "__main__":
     Expected preprocessed query: “lion OR stood OR thoughtfully OR moment”
     '''
 
-    invertedIndex = retrieveFiles() # read all the files and create the inverted index
+    invertedIndex = createInvertedIndex() # read all the files and create the inverted index
 
-    # output the inverted index to verify (DEBUG ONLY)
-    file = open("./InvertedIndex.txt", "w")
-
-    invertedIndexDictionary = invertedIndex.indexList
-    for index in invertedIndexDictionary:
-        file.write(index)
-        file.write(" --> ")
-        file.write(invertedIndexDictionary[index])
-        file.write("\n")
+    #TODO- invertedIndex isn't sorted for some reason (shouldn't be as document id should be appended to the end of the set)
+    outputInvertedIndex() # DEBUG ONLY
     
-    file.close()
-
     # call method to run the query- Q3
 
     # output results after query is executed
