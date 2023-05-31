@@ -1,0 +1,5 @@
+To run this project, you will need to install following packages
+  
+    !pip install re
+    !pip install collection 
+    !pip install nltk
