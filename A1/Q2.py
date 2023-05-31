@@ -25,17 +25,18 @@ class InvertedIndex:
             newSet = {documentID} # create a new set and add the document ID to it
             self.indexList[word] = newSet # add index to the dictionary with the document ID
 
-    # sorts the docuemtnID set and returns a list for each index
+    # sorts each documentID set and returns a list for each index
     def sortDocumentIDs(self):
         for index in self.indexList:
             self.indexList[index] = sorted(self.indexList[index])
 
     # print the list of inverted index's
     def printIndex(self):
-        print("Printing inverted Index...", end="\n\n")
+        print("Printing inverted Index...", end="\n")
         for index in self.indexList:
             print(index + " --> ", end= "")
             print(self.indexList[index], end= "\n")
+        print("\n")
 
 
 '''
@@ -43,6 +44,7 @@ Tests for the InvertedIndex class
 '''
 # add a single word with one document ID
 def test_single_index_single_doc():
+    print("test_single_index_single_doc:")
     index = InvertedIndex()
 
     index.addIndex("word", 1)
@@ -51,6 +53,7 @@ def test_single_index_single_doc():
 
 # add multiple words with 1 document ID each
 def test_multiple_index_single_doc():
+    print("test_multiple_index_single_doc:")
     index = InvertedIndex()
 
     index.addIndex("word1", 1)
@@ -63,6 +66,7 @@ def test_multiple_index_single_doc():
 
 # add a sginel word but with multiple docuemnt ID's
 def test_single_index_multi_doc():
+    print("test_single_index_multi_doc:")
     index = InvertedIndex()
 
     index.addIndex("word", 1)
@@ -76,6 +80,7 @@ def test_single_index_multi_doc():
 
 # add multiple words with multiple document ID's in each word
 def test_multiple_index_multi_doc():
+    print("test_multiple_index_multi_doc:")
     index = InvertedIndex()
 
     index.addIndex("word1", 1)
@@ -101,6 +106,7 @@ def test_multiple_index_multi_doc():
     index.printIndex()
 
 def test_sort_doc():
+    print("test_sort_doc:")
     index = InvertedIndex()
 
     index.addIndex("word1", 1)
@@ -111,7 +117,6 @@ def test_sort_doc():
     index.addIndex("word2", 4)
     index.addIndex("word2", 5)
 
-    # 8 and 9 are swapped but 7 isn't...
     index.addIndex("word3", 9)
     index.addIndex("word3", 8)
     index.addIndex("word3", 7)
@@ -133,3 +138,4 @@ if __name__ == "__main__":
     test_multiple_index_single_doc()
     test_single_index_multi_doc()
     test_multiple_index_multi_doc()
+    test_sort_doc()
