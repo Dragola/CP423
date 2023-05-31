@@ -76,7 +76,10 @@ if __name__ == "__main__":
 
     invertedIndex = createInvertedIndex() # read all the files and create the inverted index
 
-    #TODO- invertedIndex isn't sorted for some reason (shouldn't be as document id should be appended to the end of the set)
+    # sort the documentID's
+    # NOTE: docuemntID set becomes a list
+    invertedIndex.sortDocumentIDs()
+
     outputInvertedIndex() # DEBUG ONLY
     
     # call method to run the query- Q3
