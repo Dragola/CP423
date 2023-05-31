@@ -22,6 +22,9 @@ class InvertedIndex:
             newSet = {document} # create a new set and add the document ID to it
             self.indexList[word] = newSet # add index to the dictionary with the document ID
 
+    def getDictionary(self):
+        return self.indexList
+
     # print the list of inverted index's
     def printIndex(self):
         print("Printing inverted Index...", end="\n\n")

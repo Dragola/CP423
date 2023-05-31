@@ -3,7 +3,6 @@ from Q2 import InvertedIndex
 import os
 
 files: list[str] # the files that we index from
-invertedIndex: InvertedIndex
 
 def retrieveFiles():
     global files
@@ -23,7 +22,7 @@ def retrieveFiles():
 
         # keep reading lines from the file until EOF is reached
         while line != "":
-            print("line= " + line) # DEBUG ONLY
+            #print("line= " + line) # DEBUG ONLY
 
             #call method from Q1 (missing the module)
             uniqueWords = preprocess_text(line)
@@ -35,9 +34,14 @@ def retrieveFiles():
             
             line = text.readline() # get the next line in the file
 
+        text.close() # close the file after reading it
+
+        print("Finished document " + str(documentId)) # DEBUG ONLY
+
         documentId += 1 # increment the document ID for the next file
 
-
+    return invertedIndex
+        
 if __name__ == "__main__":
     # process the input
     '''
@@ -47,7 +51,19 @@ if __name__ == "__main__":
     Expected preprocessed query: “lion OR stood OR thoughtfully OR moment”
     '''
 
-    retrieveFiles() # read all the files and create the inverted index
+    invertedIndex = retrieveFiles() # read all the files and create the inverted index
+
+    # output the inverted index to verify (DEBUG ONLY)
+    file = open("./InvertedIndex.txt", "w")
+
+    invertedIndexDictionary = invertedIndex.indexList
+    for index in invertedIndexDictionary:
+        file.write(index)
+        file.write(" --> ")
+        file.write(invertedIndexDictionary[index])
+        file.write("\n")
+    
+    file.close()
 
     # call method to run the query- Q3
 
