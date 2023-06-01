@@ -1,3 +1,5 @@
+from Q2 import InvertedIndex
+
 def evaluate_query(x, y):
     # Convert x to boolean based on the number
     if x != 0:
@@ -28,23 +30,22 @@ def evaluate_query(x, y):
 
 
 # Inverted index mapping words to numbers
-inverted_index = {
-    "apple": 1,
-    "banana": 2,
-    "cat": 3,
-    "dog": 4,
-}
-# print out words
-for i in inverted_index:
-    print(i)
+invertedIndex = InvertedIndex() 
+invertedIndex.addIndex("apple", 1)
+invertedIndex.addIndex("banana", 2)
+invertedIndex.addIndex("cat", 3)
+invertedIndex.addIndex("dog", 4)
+
+indexList = invertedIndex.indexList
+invertedIndex.printIndexList()
 
 # Test the function
 word_x = input("Enter the value of x (word): ")
 word_y = input("Enter the value of y (word): ")
 
 # Get the corresponding numbers from the inverted index
-x = inverted_index.get(word_x, 0)
-y = inverted_index.get(word_y, 0)
+x = indexList[word_x]
+y = indexList[word_y]
 
 result_or, result_and, result_and_not, result_or_not = evaluate_query(x, y)
 
