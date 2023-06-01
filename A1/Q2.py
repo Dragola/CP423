@@ -30,7 +30,7 @@ class InvertedIndex:
         for index in self.indexList:
             self.indexList[index] = sorted(self.indexList[index])
 
-    # print the list of inverted index's
+    # print the list of inverted index's (DEBUG)
     def printIndexList(self):
         print("Printing inverted Index...", end="\n")
         for index in self.indexList:
@@ -105,7 +105,8 @@ def test_multiple_index_multi_doc():
 
     index.printIndexList()
 
-def test_sort_doc():
+# add multiple words with multiple document ID's and sort the docuemnt ID's for each word
+def test_sort_multiple_index_multi_doc():
     print("test_sort_doc:")
     index = InvertedIndex()
 
@@ -133,9 +134,10 @@ def test_sort_doc():
 
     index.printIndexList()
 
+# only runs tests if this file is being run
 if __name__ == "__main__":
     test_single_index_single_doc()
     test_multiple_index_single_doc()
     test_single_index_multi_doc()
     test_multiple_index_multi_doc()
-    test_sort_doc()
+    test_sort_multiple_index_multi_doc()
