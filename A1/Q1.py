@@ -28,7 +28,7 @@ def preprocess_text(text):
     tokens = [token for token in tokens if token not in stop_words]
 
     # excluding special characters
-    tokens = [re.sub(r'[^a-zA-Z0-9]', '', token) for token in tokens if token]
+    tokens = [re.sub(r'[^a-zA-Z]', ' ', token) for token in tokens if token]
 
     # eliminating singly occuring characters
     word_counts = Counter(tokens)
