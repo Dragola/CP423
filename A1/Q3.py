@@ -7,7 +7,20 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
     # check that query is valid (minimum: word | operation | word). Query can have more
     if len(query) < 3:
         return None
-
+    
+    # check if any of the required operators are missing
+    if "AND" not in query and "OR" not in query and "NOT" not in query:
+        print(
+            "Warning: Query must contain at least one of the operators AND, OR, or NOT (case sensitive)."
+        )
+        return None
+    
+    # check if all words in the query exist in the inverted index
+    for word in query:
+        if word not in inverted_index.indexList and word not in ["AND", "OR", "NOT"]:
+            print(f"Error: Word '{word}' does not exist in the inverted index.")
+            return None
+        
     # grab the posting list for the first word in the query
     firstPostingList = set(inverted_index.indexList[query[0]]) 
     
@@ -43,9 +56,6 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
             result = firstPostingList.intersection(secondPostingList)
         elif operator.upper() == "OR":
             result = firstPostingList.union(secondPostingList)
-        else:
-            # if word isn't AND/OR then we should print to indicate the error
-            return None
 
     return result
 
@@ -56,10 +66,12 @@ invertedIndex.addIndex("apple", 1)
 invertedIndex.addIndex("apple", 2)
 invertedIndex.addIndex("banana", 2)
 invertedIndex.addIndex("banana", 3)
-invertedIndex.addIndex("cherry", 1)
 invertedIndex.addIndex("cherry", 3)
-invertedIndex.addIndex("orange", 2)
-invertedIndex.addIndex("berry", 1)
+invertedIndex.addIndex("orange", 6)
+invertedIndex.addIndex("orange", 7)
+invertedIndex.addIndex("berry", 2)
+invertedIndex.addIndex("berry", 4)
+invertedIndex.addIndex("grape", 5)
 
 invertedIndex.printIndexList()
 
