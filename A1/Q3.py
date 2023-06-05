@@ -37,7 +37,7 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
         operator = query[i]
         
         # if NOT is used 
-        if query[i + 1].upper() == "NOT":
+        if query[i + 1] == "NOT":
             # flip the posting list for the second word
             secondPostingList = set(totalPostingList) - set(inverted_index.indexList[query[i + 2]])
             
@@ -52,9 +52,9 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
             i += 2 
         
         # Apply the operators accordingly
-        if operator.upper() == "AND":
+        if operator == "AND":
             result = firstPostingList.intersection(secondPostingList)
-        elif operator.upper() == "OR":
+        elif operator == "OR":
             result = firstPostingList.union(secondPostingList)
 
     return result

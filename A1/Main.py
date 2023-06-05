@@ -3,63 +3,74 @@ from Q2 import InvertedIndex
 from Q3 import process_query
 import os
 
-files: list[str] # the files that we index from
+documents: dict = {} # the files that we index from
 
 # read through all files, process the text, and return the inverted index
 def createInvertedIndex():
-    global files
+    global documents
 
+    # create new Inverted Index from Q2
     invertedIndex = InvertedIndex()
-    
-    files = os.listdir("./data/") # get a list of all the files in the data directory
-    #print(files) # remove later (DEBUG ONLY)
 
-    documentId = 1 # the document ID for the current file
+    # get a list of all the files in the data directory
+    list_of_file_names = os.listdir("./data/") 
 
-    # loop through each file
-    for file in files:
-        filePath = "./data/" + file # set up the path to the file
-        text = open(filePath, "r") # open the file for reading
-        line = text.readline() # get the first line
+    # the document ID for the current file
+    documentId = 1 
 
-        # keep reading lines from the file until EOF is reached
+    # loop through each file and add to the documents dict
+    for file in list_of_file_names:
+        # set up the path to the file
+        filePath = "./data/" + file
+       
+        # open the file for reading
+        text = open(filePath, "r") 
+
+        # get the first line in the file
+        line = text.readline() 
+
+        # keep reading lines from the file until there are no more lines
         while line != "":
-            #print("line= " + line) # DEBUG ONLY
-
-            #call method from Q1 (missing the module)
+            #call method from Q1 to tokenize the line- a bit broken still
             uniqueWords = preprocess_text(line)
             
             # add the words/tokens from the line into the index list
             for word in uniqueWords:
                 invertedIndex.addIndex(word, documentId)
             
-            line = text.readline() # get the next line in the file
+            # get the next line in the file
+            line = text.readline() 
 
-        text.close() # close the file after reading it
-        
-
+        # close the file after reading it
+        text.close() 
+    
         print("Finished document " + str(documentId)) # DEBUG ONLY
 
-        documentId += 1 # increment the document ID for the next file
-
+        # add the document to the list of documents
+        document: dict = {documentId: file}
+        documents.update(document)
+        
+        # increment the document ID for the next file
+        documentId += 1 
     return invertedIndex
 
 '''
 Function to output the inverted index to verify integrity (DEBUG ONLY)
 '''
 def outputInvertedIndex(invertedIndex: InvertedIndex):
+    global documents
+
+    # open file to write to
     file = open("./InvertedIndex.txt", "w")
 
-    documentID = 1 # document ID
+    # write each file name + document ID to the file
+    for documentId in documents.keys():
+        file.write(documents[documentId] + "| DocumentID= " + str(documentId) + "\n")
 
-    # write each file name + document ID to the txt file
-    for documentName in files:
-        file.write(documentName + "| DocumentID= " + str(documentID) + "\n")
-        documentID += 1
-
+    # add space for the inverted index
     file.write("\n\n")
 
-    # write each index and posting set to the txt file
+    # write each index and posting list to the file
     invertedIndexDictionary = invertedIndex.indexList
     for index in invertedIndexDictionary:
         file.write(index)
@@ -68,6 +79,7 @@ def outputInvertedIndex(invertedIndex: InvertedIndex):
             file.write(str(documentID) + ", ")
         file.write("}- size= " + str(len(invertedIndexDictionary[index])) + "\n")
     
+    # close file
     file.close()
 
 if __name__ == "__main__":
@@ -78,9 +90,11 @@ if __name__ == "__main__":
 
     Expected preprocessed query: “lion OR stood OR thoughtfully OR moment”
     '''
-    # get query
+    # get the number of query that the user wants to run
     user_input_query_number = input("How many queries are you running? ")
     query_number = int(user_input_query_number)
+
+    # get the query and process it for 
     for i in range(query_number):
         # get the query
         print("Query #" + str(i) + ":")      
@@ -106,8 +120,9 @@ if __name__ == "__main__":
             operator_index += 1
 
         print("Expected preprocessed query: " + preprocessed_query)
-    
-        invertedIndex = createInvertedIndex() # read all the files and create the inverted index
+
+        # read all the files and create the inverted index (TODO- Should only run once with multiple queries)
+        invertedIndex = createInvertedIndex() 
 
         # sort the documentID's
         # NOTE: docuemntID set becomes a list
@@ -115,9 +130,8 @@ if __name__ == "__main__":
 
         outputInvertedIndex(invertedIndex) # DEBUG ONLY
         
-        # call method to run the query- Q3
-        result = process_query(preprocessed_query, invertedIndex, len(files))
-
+        # call method to run the query in Q3
+        result = process_query(preprocessed_query, invertedIndex, len(documents))
 
         # output results after query is executed (need to do)
         '''
@@ -126,11 +140,13 @@ if __name__ == "__main__":
         Minimum number of comparisons required: 671
         List of retrieved document names
         '''
+        # output required info
         print("Number of matched documents: " + str(len(result)))
-        print("Minimum number of comparisons required: We need to record this")
+        print("Minimum number of comparisons required: We need to record/get this")
         print("List of retrieved document names")
 
-        for documentID in result:
-            print(files[documentID - 1])
+        # output the file names
+        for documentId in result:
+            print(documents[documentId] + " | Id= " + str(documentId))
     
     
