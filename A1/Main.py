@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
         # need to processes the input (remove common words)
         # Ex. “lion stood thoughtfully for a moment” --> “lion OR stood OR thoughtfully OR moment”
-        operators = user_input_operation_sequence.strip().split()
+        operators = user_input_operation_sequence.strip().split(",")
         preprocessed_sentence = preprocess_text(user_input_sentence) # returning a set with no elements...
 
         print("preprocessed_sentence from function: ", end="")
@@ -98,36 +98,39 @@ if __name__ == "__main__":
         preprocessed_query = ""
         operator_index = 0
         for word in preprocessed_sentence:
-            text = word + " " + operators[operator_index] + " "
+            if (operator_index < len(operators)):
+                text = word + " " + operators[operator_index] + " " 
+            else :
+                text = word
             preprocessed_query += text
             operator_index += 1
 
         print("Expected preprocessed query: " + preprocessed_query)
     
-        # invertedIndex = createInvertedIndex() # read all the files and create the inverted index
+        invertedIndex = createInvertedIndex() # read all the files and create the inverted index
 
-        # # sort the documentID's
-        # # NOTE: docuemntID set becomes a list
-        # invertedIndex.sortDocumentIDs()
+        # sort the documentID's
+        # NOTE: docuemntID set becomes a list
+        invertedIndex.sortDocumentIDs()
 
-        # outputInvertedIndex(invertedIndex) # DEBUG ONLY
+        outputInvertedIndex(invertedIndex) # DEBUG ONLY
         
-        # # call method to run the query- Q3
-        # result = process_query(user_input, invertedIndex, len(files))
+        # call method to run the query- Q3
+        result = process_query(preprocessed_query, invertedIndex, len(files))
 
 
-        # # output results after query is executed (need to do)
-        # '''
-        # Output:
-        # Number of matched documents: 270
-        # Minimum number of comparisons required: 671
-        # List of retrieved document names
-        # '''
-        # print("Number of matched documents: " + str(len(result)))
-        # print("Minimum number of comparisons required: We need to record this")
-        # print("List of retrieved document names")
+        # output results after query is executed (need to do)
+        '''
+        Output:
+        Number of matched documents: 270
+        Minimum number of comparisons required: 671
+        List of retrieved document names
+        '''
+        print("Number of matched documents: " + str(len(result)))
+        print("Minimum number of comparisons required: We need to record this")
+        print("List of retrieved document names")
 
-        # for documentID in result:
-        #     print(files[documentID])
+        for documentID in result:
+            print(files[documentID - 1])
     
     

@@ -27,14 +27,25 @@ def preprocess_text(text):
     stop_words = set(stopwords.words('english'))
     tokens = [token for token in tokens if token not in stop_words]
 
+     # remove whitespace in tokens
+    for token in tokens:
+       token = token.strip()
+
     # excluding special characters
     tokens = [re.sub(r'[^a-zA-Z]', ' ', token) for token in tokens if token]
 
     # eliminating singly occuring characters
-    word_counts = Counter(tokens)
-    tokens = [token for token in tokens if word_counts[token] > 1]
+    #word_counts = Counter(tokens)
+    # tokens = [token for token in tokens if word_counts[token] > 1]
+
+    # eliminating single character words
+    tokens = [token for token in tokens if len(token) > 1]
+
+    # TODO- ensure that token staets with a character
+
+   
     
     # creating set of all the words
-    unique_words = set(tokens)
+    #unique_words = list(tokens)
     
-    return unique_words
+    return tokens
