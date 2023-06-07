@@ -31,7 +31,8 @@ def preprocess_text(text):
    tokens = [token.strip() for token in tokens]
 
    # excluding special characters (TODO- why is it adding a space?)
-   tokens = [re.sub(r'[^a-zA-Z]', ' ', token) for token in tokens if token]
+   #tokens = [re.sub(r'[^a-zA-Z]', ' ', token) for token in tokens if token]
+   tokens = [re.sub('[^a-zA-Z]', ' ', token) for token in tokens]
 
    # eliminating singly occuring characters
    #word_counts = Counter(tokens)
