@@ -98,7 +98,7 @@ if __name__ == "__main__":
     # get the query from user and process it until number of queries is reached
     for i in range(query_number):
         # get the query from user
-        print("Query #" + str(i) + ":")      
+        print("Query #" + str(i+1) + ":")      
         user_input_sentence = input("Input Sentence: ")
         user_input_operation_sequence = input("Input operation sequence: ")
 
