@@ -1,20 +1,31 @@
 from Q2 import InvertedIndex
 
+'''
+Verify if the query meets certain requirements
+'''
+def check_query_format_valid(query: str):
+    # break down query and process
+    query = query.strip().split()
+    
+    # check that query is valid (minimum: word | operation | word). Query can have more
+    if len(query) < 3:
+        print("Error: Query must contain at least two words and one operator.")
+        return False
+    
+    # check if any of the required operators are missing
+    if "AND" not in query and "OR" not in query and "NOT" not in query:
+        print("Error: Query must contain at least one of the operators AND, OR, or NOT (case sensitive).")
+        return False
+    
+    return True
+
+'''
+Process the query and return the resulting posting list
+'''
 def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: int):
     # break down query and process
     query = query.strip().split()
 
-    # check that query is valid (minimum: word | operation | word). Query can have more
-    if len(query) < 3:
-        return None
-    
-    # check if any of the required operators are missing
-    if "AND" not in query and "OR" not in query and "NOT" not in query:
-        print(
-            "Warning: Query must contain at least one of the operators AND, OR, or NOT (case sensitive)."
-        )
-        return None
-    
     # check if all words in the query exist in the inverted index
     for word in query:
         if word not in inverted_index.indexList and word not in ["AND", "OR", "NOT"]:
@@ -57,7 +68,7 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
         elif operator == "OR":
             result = firstPostingList.union(secondPostingList)
 
-    return result
+    return list(sorted(result))
 
 # only runs tests if this file is being run
 if __name__ == "__main__":

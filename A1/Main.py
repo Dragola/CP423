@@ -1,9 +1,10 @@
 from Q1 import preprocess_text
 from Q2 import InvertedIndex
-from Q3 import process_query
+from Q3 import *
 import os
 
 documents: dict = {} # the files that we index from
+invertedIndex: InvertedIndex = None
 
 # read through all files, process the text, and return the inverted index
 def createInvertedIndex():
@@ -83,7 +84,7 @@ def outputInvertedIndex(invertedIndex: InvertedIndex):
     file.close()
 
 if __name__ == "__main__":
-    # process the input (need to do)
+    # process the input
     '''
     Input sentence: “lion stood thoughtfully for a moment”
     Input operation sequence: [OR, OR, OR]
@@ -94,23 +95,27 @@ if __name__ == "__main__":
     user_input_query_number = input("How many queries are you running? ")
     query_number = int(user_input_query_number)
 
-    # get the query and process it for 
+    # get the query from user and process it until number of queries is reached
     for i in range(query_number):
-        # get the query
+        # get the query from user
         print("Query #" + str(i) + ":")      
         user_input_sentence = input("Input Sentence: ")
         user_input_operation_sequence = input("Input operation sequence: ")
 
-        # need to processes the input (remove common words)
+        # processes the sentence (Q1)
         # Ex. “lion stood thoughtfully for a moment” --> “lion OR stood OR thoughtfully OR moment”
         operators = user_input_operation_sequence.strip().split(",")
-        preprocessed_sentence = preprocess_text(user_input_sentence) # returning a set with no elements...
+        preprocessed_sentence = preprocess_text(user_input_sentence)
 
+        # DEBUG ONLY
         print("preprocessed_sentence from function: ", end="")
         print(preprocessed_sentence)
 
+        # new string to put query into
         preprocessed_query = ""
         operator_index = 0
+
+        # add the operators to the processed sentence, forming the actual query
         for word in preprocessed_sentence:
             if (operator_index < len(operators)):
                 text = word + " " + operators[operator_index] + " " 
@@ -119,34 +124,41 @@ if __name__ == "__main__":
             preprocessed_query += text
             operator_index += 1
 
+        # output query after being processed
         print("Expected preprocessed query: " + preprocessed_query)
 
-        # read all the files and create the inverted index (TODO- Should only run once with multiple queries)
-        invertedIndex = createInvertedIndex() 
+        # check query before continuing
+        if (check_query_format_valid(preprocessed_query) == True):
+            
+            # generate invertedIndex if it wasn't previously
+            if (invertedIndex == None):
+                print("Generating inverted index. Please wait...")
+                # read all the files and create the inverted index (Q2)
+                invertedIndex = createInvertedIndex()
 
-        # sort the documentID's
-        # NOTE: docuemntID set becomes a list
-        invertedIndex.sortDocumentIDs()
+            # sort the documentID's (NOTE: each docuemntId set becomes a list)
+            invertedIndex.sortDocumentIDs()
 
-        outputInvertedIndex(invertedIndex) # DEBUG ONLY
-        
-        # call method to run the query in Q3
-        result = process_query(preprocessed_query, invertedIndex, len(documents))
+            # DEBUG ONLY- write documetns and inverted index to a file for verifying/debugging
+            outputInvertedIndex(invertedIndex) 
+            
+            # run the query (Q3)
+            result = process_query(preprocessed_query, invertedIndex, len(documents))
 
-        # output results after query is executed (need to do)
-        '''
-        Output:
-        Number of matched documents: 270
-        Minimum number of comparisons required: 671
-        List of retrieved document names
-        '''
-        # output required info
-        print("Number of matched documents: " + str(len(result)))
-        print("Minimum number of comparisons required: We need to record/get this")
-        print("List of retrieved document names")
+            # output results after query is executed (need to do)
+            '''
+            Output:
+            Number of matched documents: 270
+            Minimum number of comparisons required: 671 (if applicable, only for the merging algorithm)
+            List of retrieved document names
+            '''
+            # output required info
+            print("Number of matched documents: " + str(len(result)))
+            print("Minimum number of comparisons required: We need to record/get this")
+            print("List of retrieved document names")
 
-        # output the file names
-        for documentId in result:
-            print(documents[documentId] + " | Id= " + str(documentId))
+            # output the file names
+            for documentId in result:
+                print(documents[documentId] + " | Id= " + str(documentId))
     
     
