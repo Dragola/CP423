@@ -139,6 +139,7 @@ if __name__ == "__main__":
                 invertedIndex = createInvertedIndex()
 
             # sort the documentID's (NOTE: each docuemntId set becomes a list)
+            #TODO- is this needed?
             invertedIndex.sortDocumentIDs()
 
             # DEBUG ONLY- write documetns and inverted index to a file for verifying/debugging
@@ -146,23 +147,17 @@ if __name__ == "__main__":
             
             # run the query (Q3)
             result, total_comparisons = process_query(preprocessed_query, invertedIndex, len(documents))
-
-            # output results after query is executed (need to do)
-            '''
-            Output:
-            Number of matched documents: 270
-            Minimum number of comparisons required: 671 (if applicable, only for the merging algorithm)
-            List of retrieved document names
-            '''
-            # output required info
+           
+            # output number of matched documents
             print("Number of matched documents: " + str(len(result)))
             
             #TODO- Should we only print if AND was used?
+            # output min number of comnparisons (OR doesn't contribute to this, right?)
             print("Minimum number of comparisons required: " + str(total_comparisons))
+            
+            # output the list of document names (with their ID's) that satisfy the query
             print("List of retrieved document names")
-
-            # output the file names
             for documentId in result:
-                print(documents[documentId] + " | Id= " + str(documentId))
+                print(documents[documentId] + " | ID= " + str(documentId))
     
     
