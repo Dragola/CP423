@@ -117,8 +117,10 @@ if __name__ == "__main__":
 
         # add the operators to the processed sentence, forming the actual query
         for word in preprocessed_sentence:
+            # if there's an operator add the word followed by the operator
             if (operator_index < len(operators)):
-                text = word + " " + operators[operator_index] + " " 
+                text = word + " " + operators[operator_index].strip() + " " 
+            # if there are no more operators then just add the word to the end
             else :
                 text = word
             preprocessed_query += text
@@ -143,7 +145,7 @@ if __name__ == "__main__":
             outputInvertedIndex(invertedIndex) 
             
             # run the query (Q3)
-            result = process_query(preprocessed_query, invertedIndex, len(documents))
+            result, total_comparisons = process_query(preprocessed_query, invertedIndex, len(documents))
 
             # output results after query is executed (need to do)
             '''
@@ -154,7 +156,9 @@ if __name__ == "__main__":
             '''
             # output required info
             print("Number of matched documents: " + str(len(result)))
-            print("Minimum number of comparisons required: We need to record/get this")
+            
+            #TODO- Should we only print if AND was used?
+            print("Minimum number of comparisons required: " + str(total_comparisons))
             print("List of retrieved document names")
 
             # output the file names
