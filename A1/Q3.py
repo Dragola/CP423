@@ -113,29 +113,29 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
 
 
 # only runs tests if this file is being run
-if __name__ == "__main__":
-    # Inverted index mapping words to numbers
-    invertedIndex = InvertedIndex()
-    invertedIndex.addIndex("apple", 1)
-    invertedIndex.addIndex("apple", 2)
-    invertedIndex.addIndex("banana", 2)
-    invertedIndex.addIndex("banana", 3)
-    invertedIndex.addIndex("cherry", 3)
-    invertedIndex.addIndex("orange", 6)
-    invertedIndex.addIndex("orange", 7)
-    invertedIndex.addIndex("berry", 2)
-    invertedIndex.addIndex("berry", 4)
-    invertedIndex.addIndex("grape", 5)
+# if __name__ == "__main__":
+#     # Inverted index mapping words to numbers
+#     invertedIndex = InvertedIndex()
+#     invertedIndex.addIndex("apple", 1)
+#     invertedIndex.addIndex("apple", 2)
+#     invertedIndex.addIndex("banana", 2)
+#     invertedIndex.addIndex("banana", 3)
+#     invertedIndex.addIndex("cherry", 3)
+#     invertedIndex.addIndex("orange", 6)
+#     invertedIndex.addIndex("orange", 7)
+#     invertedIndex.addIndex("berry", 2)
+#     invertedIndex.addIndex("berry", 4)
+#     invertedIndex.addIndex("grape", 5)
 
-    # print the inverted index
-    invertedIndex.printIndexList()
+#     # print the inverted index
+#     invertedIndex.printIndexList()
 
-    # get query
-    user_input = input("Enter the query: ")
+#     # get query
+#     user_input = input("Enter the query: ")
 
-    # process query
-    result, total_comparisons = process_query(user_input, invertedIndex, 3)
+#     # process query
+#     result, total_comparisons = process_query(user_input, invertedIndex, 3)
 
-    # print result
-    print(f"Result: {result}")
-    print("Total comparisons= " + str(total_comparisons))
+#     # print result
+#     print(f"Result: {result}")
+#     print("Total comparisons= " + str(total_comparisons))

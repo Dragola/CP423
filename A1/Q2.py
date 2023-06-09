@@ -10,6 +10,7 @@ class InvertedIndex:
     indexList: dict
 
     def __init__(self):
+       # create indexList on object initialization
        self.indexList = {}
     
     # adds/updates an index
@@ -18,14 +19,18 @@ class InvertedIndex:
         # check if index already exists in the dictionary
         if word in self.indexList:
             newDocumentID = {documentID}
-            self.indexList[word].update(newDocumentID) # add document ID to existing index
+            # add document ID to existing index
+            self.indexList[word].update(newDocumentID) 
 
         # if index wasn't already in list
         else:
-            newSet = {documentID} # create a new set and add the document ID to it
-            self.indexList[word] = newSet # add index to the dictionary with the document ID
+            # create a new set with the initial document ID
+            newSet = {documentID} 
 
-    # sorts each documentID set and returns a list for each index
+            # add index to the dictionary with the document ID set
+            self.indexList[word] = newSet 
+
+    # sorts each documentID set and makes then a list for each index in the list
     def sortDocumentIDs(self):
         for index in self.indexList:
             self.indexList[index] = sorted(self.indexList[index])
@@ -135,9 +140,9 @@ def test_sort_multiple_index_multi_doc():
     index.printIndexList()
 
 # only runs tests if this file is being run
-if __name__ == "__main__":
-    test_single_index_single_doc()
-    test_multiple_index_single_doc()
-    test_single_index_multi_doc()
-    test_multiple_index_multi_doc()
-    test_sort_multiple_index_multi_doc()
+# if __name__ == "__main__":
+#     test_single_index_single_doc()
+#     test_multiple_index_single_doc()
+#     test_single_index_multi_doc()
+#     test_multiple_index_multi_doc()
+#     test_sort_multiple_index_multi_doc()
