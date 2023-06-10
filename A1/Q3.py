@@ -54,7 +54,7 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
 
         # grab previous posting list if this isn't the first operation in query
         if (len(result) > 0):
-            print("Another operator, grabbing previous result") #DEBUG
+            #print("Another operator, grabbing previous result") #DEBUG
             firstPostingList = result
 
         # get the operator
@@ -116,7 +116,6 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
                 
                 # check if second pointer is still valid index
                 if (p2 < len(secondPostingList)):
-                    print("p2 valid")
                     # if the first posting list's value is lower
                     if firstPostingList[p1] < secondPostingList[p2]:
                         # append to list and move first pointer
@@ -132,7 +131,6 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
                     total_comparisons += 1
                 # if second pointer is invalid then just add from first list
                 else:
-                    print("p2 bad")
                     # append to list and move first pointer
                     result.append(firstPostingList[p1])
                     p1 += 1
