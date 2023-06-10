@@ -13,12 +13,14 @@ Due Date/Submission Date: June 11th, 2023, 11:59pm
 The purpose of this assignment was to create a functioning program to run queries against a dataset in Python. This involved preprocessing the data, implementing an inverted index data structure, taking input from the user, implementing a combination of 'OR', 'AND', & 'NOT' operations for the queries, testing the code for errors, and running a set of queries that return data from the dataset. 
 
 To run this project you will need to install the following packages/modules:
-  - !pip instal -r .\requirements.txt  
+
+  - !pip install -r .\requirements.txt  
   - !pip install collections
   - !pip install re
   - !pip install nltk
   - collection
   - nltk
+
 And of course, loop through each file to read the lines in each file, until the end of the files and list of files is reached, while creating a unique document ID for each file after reading. 
 
 Q1. 
