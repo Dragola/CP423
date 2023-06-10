@@ -34,4 +34,4 @@ This is the main testing file. The previous 3 files are imported in here. As the
 A video voiceover was later created to demonstrate some output against a user-created query on a dataset file. 
 
 ## How to run the program:
-Open VS Code, install the required libraries, and then run Q4. It will ask you to run a number of queries. When writing down the Input Sentence, don't use punctuation or quotations. When listing the operation sequence, separate each caps-locked operations by a comma (minus the final one_. Do not include brackets with them. 
+Open VS Code, install the required libraries, and then run Q4. It will ask you to run a number of queries. When writing down the Input Sentence, don't use punctuation or quotations. When listing the operation sequence, separate each caps-locked operations by a comma (minus the final one). Do not include brackets with them. 
