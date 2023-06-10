@@ -112,9 +112,12 @@ if __name__ == "__main__":
             
             # run the query (Q3)
             result, total_comparisons = process_query(preprocessed_query, invertedIndex, len(documents))
-           
+
+            # indicate output area
+            print("\nOutput:")
+
             # output number of matched documents
-            print("\nNumber of matched documents: " + str(len(result)))
+            print("Number of matched documents: " + str(len(result)))
             
             # output min number of comnparisons (only counted when AND is used)
             print("Minimum number of comparisons required: " + str(total_comparisons))

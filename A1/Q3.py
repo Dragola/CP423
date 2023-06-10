@@ -47,14 +47,14 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
         totalPostingList.append(j)
 
     # create empty set for the resulting posting list
-    result = set()
+    result = list()
 
     # Split the query into operators and operands
     while i < len(query):
 
         # grab previous posting list if this isn't the first operation in query
         if (len(result) > 0):
-            print("Another operator, grabbing previous result")
+            print("Another operator, grabbing previous result") #DEBUG
             firstPostingList = result
 
         # get the operator
@@ -75,30 +75,35 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
             # skip over the word for next operator (if there is)
             i += 2 
 
-        # Apply the AND operation
-        if operator == "AND":
-            # sort the lists before doing the operation
-            firstPostingList = sorted(firstPostingList)
-            secondPostingList = sorted(secondPostingList)
+        # sort the lists before doing the operation
+        firstPostingList = sorted(firstPostingList)
+        secondPostingList = sorted(secondPostingList)
 
-            # varaibles for the algorithm
-            p1 = 0
-            p2 = 0
-            result = set()
-            
-            # algorithm time!
-            while p1 < len(firstPostingList) and p2 <len(secondPostingList):
+        # clear result for the operation
+        result = list()
+
+        # varaibles for the operation
+        p1 = 0
+        p2 = 0
+
+        # Apply the AND operation
+        if operator == "AND":  
+            # while pointers haven't reaches the ends of the lists
+            while p1 < len(firstPostingList) and p2 < len(secondPostingList):
                 
-                # if id's match, add to set
+                # if id's match
                 if firstPostingList[p1] == secondPostingList[p2]:
-                    result.add(firstPostingList[p1])
+                    # append to list and move both pointer
+                    result.append(firstPostingList[p1])
                     p1 += 1
                     p2 += 1
                 # if the first posting list's value is lower
                 elif firstPostingList[p1] < secondPostingList[p2]:
+                    # move first pointer
                     p1 += 1
                 # if the second posting list's value is lower
                 else:
+                    # move second pointer
                     p2 += 1
                 
                 # increment counter
@@ -106,36 +111,64 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
         
         # apply the OR operator
         elif operator == "OR":
-            firstPostingList = set(firstPostingList)
-            result = firstPostingList.union(secondPostingList)
+            # go through the id's in the first posting list
+            while p1 < len(firstPostingList):
+                
+                # check if second pointer is still valid index
+                if (p2 < len(secondPostingList)):
+                    print("p2 valid")
+                    # if the first posting list's value is lower
+                    if firstPostingList[p1] < secondPostingList[p2]:
+                        # append to list and move first pointer
+                        result.append(firstPostingList[p1])
+                        p1 += 1
+                    # if the second posting list's value is lower 
+                    else:
+                        # append to list and move second pointer
+                        result.append(secondPostingList[p2])
+                        p2 += 1
 
-    return list(sorted(result)), total_comparisons
+                    # increment counter
+                    total_comparisons += 1
+                # if second pointer is invalid then just add from first list
+                else:
+                    print("p2 bad")
+                    # append to list and move first pointer
+                    result.append(firstPostingList[p1])
+                    p1 += 1
+
+            # add the remaining id's from the second posting list
+            while p2 < len(secondPostingList):
+                result.append(secondPostingList[p2])
+                p2 +=1
+                
+    return result, total_comparisons
 
 
 # only runs tests if this file is being run
-# if __name__ == "__main__":
-#     # Inverted index mapping words to numbers
-#     invertedIndex = InvertedIndex()
-#     invertedIndex.addIndex("apple", 1)
-#     invertedIndex.addIndex("apple", 2)
-#     invertedIndex.addIndex("banana", 2)
-#     invertedIndex.addIndex("banana", 3)
-#     invertedIndex.addIndex("cherry", 3)
-#     invertedIndex.addIndex("orange", 6)
-#     invertedIndex.addIndex("orange", 7)
-#     invertedIndex.addIndex("berry", 2)
-#     invertedIndex.addIndex("berry", 4)
-#     invertedIndex.addIndex("grape", 5)
+if __name__ == "__main__":
+    # Inverted index mapping words to numbers
+    invertedIndex = InvertedIndex()
+    invertedIndex.addIndex("apple", 1)
+    invertedIndex.addIndex("apple", 2)
+    invertedIndex.addIndex("banana", 2)
+    invertedIndex.addIndex("banana", 3)
+    invertedIndex.addIndex("cherry", 3)
+    invertedIndex.addIndex("orange", 6)
+    invertedIndex.addIndex("orange", 7)
+    invertedIndex.addIndex("berry", 2)
+    invertedIndex.addIndex("berry", 4)
+    invertedIndex.addIndex("grape", 5)
 
-#     # print the inverted index
-#     invertedIndex.printIndexList()
+    # print the inverted index
+    invertedIndex.printIndexList()
 
-#     # get query
-#     user_input = input("Enter the query: ")
+    # get query
+    user_input = input("Enter the query: ")
 
-#     # process query
-#     result, total_comparisons = process_query(user_input, invertedIndex, 3)
+    # process query
+    result, total_comparisons = process_query(user_input, invertedIndex, 3)
 
-#     # print result
-#     print(f"Result: {result}")
-#     print("Total comparisons= " + str(total_comparisons))
+    # print result
+    print(f"Result: {result}")
+    print("Total comparisons= " + str(total_comparisons))
