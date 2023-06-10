@@ -3,10 +3,13 @@
 ### Assignment 1 - Group 6 Submission
 
 ## Members:
-Gadd, Bryan
-Jain, Maheep
-Khamphavong, Osaka
-Simion, Alexandra
+- Gadd, Bryan
+
+- Jain, Maheep
+
+- Khamphavong, Osaka
+
+- Simion, Alexandra
     
 Due Date/Submission Date: June 11th, 2023, 11:59pm
 
