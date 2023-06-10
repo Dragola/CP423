@@ -15,7 +15,8 @@ The purpose of this assignment was to create a functioning program to run querie
 
 ## Requirments:
 To run this project you will need to run the following command to install the required modules/libraries:
-- !pip install -r .\requirements.txt  
+
+!pip install -r .\requirements.txt  
 
 ## Summary of files:
 ### Q1. 
