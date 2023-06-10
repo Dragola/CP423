@@ -32,4 +32,5 @@ This is the main testing file. The previous 3 files are imported in here. As the
 
 A video voiceover was later created to demonstrate some output against a user-created query on a dataset file. 
 
-
+## How to run the program:
+Add details...
