@@ -10,7 +10,7 @@
 - Khamphavong, Osaka
 
 - Simion, Alexandra
-    
+
 Due Date/Submission Date: June 11th, 2023, 11:59pm
 
 ## Summary:
@@ -22,19 +22,32 @@ To run this project you will need to run the following command to install the re
 !pip install -r .\requirements.txt  
 
 ## Summary of files:
-### Q1. 
-For preprocessing the text, we converted the text to lowercase using .lower() then tokenized the text by passing the dataset into word_tokenize(). We then removed any stopwords from the tokenized words, excluded special characters, removed whitespace, and eliminated single character words before returning the final token. We imported and downloaded stopwords and word_tokenize from nltk as certain functions from these modules were required to identify and remove stopwords amongst tokenizing the text. The functions strip() and sub() were used to remove white space and exclude special characters by identifying the characters we wanted to use (a-z and A-Z). 
+### Q1.
+Contains the tokenization code. The function take some text (aka string) as input, tokenizes it, and outputs a unique list of workds/tokens. We use this function to process the input sentence and text in the data documents in Q4.
 
-### Q2. 
-We made a datastructure called InvertedIndex to store key-value pairs through the initialization of objects to store this data. We also had to define a few functions labeled addIndex(), sortDocumentIDs(), and a few testing methods that we use to call upon in other documents. The function addIndex() does exactly what it's titled to do. It checked to see if the index already exists in the dictionary. If it doesn't, it adds in the new index to the dictionary and creates a document ID. Using a for loop, sortDocumentIDs() sorts the documentIds for each index in the list. The testing methods are defined to use sortDocumentID() and addIndex() to add different combination(s) of word(s) to multiple or a single document ID. They also sort added words with multiple document IDs for each word. 
+### Q2.
+Holds the InvertedIndex class. This class is used to store the tokens and their posting lists in a dictionary list. A dictionary list was used to provide speedy indexing + easier locating of index's. It contains a few methods to add/updated and index, and print the index list (for debugging).
 
 ### Q3.
-Importing the data structure we created, we made 2 functions to check if the format of the query is valid (that it meets certain requirements) and to process the requests of the query. We added cases to check for and handle "AND", "OR", "NOT",  or combination of the three. If none were present or if the query is missing either a word, operation, and/or another word, it would print an error message. The process_query() function breaks down the query and process then checks if all the words in the query exists in the inverted list. If it exists, this information is appended and returned as a list of document IDs that obey the specifications of the query.
+Contains the query processing code. There are 2 functions:
+- The first take a query (string) and checks the format. We use this in Q4 before running the query.
+- The second takes a query (string), the inverted index, and the total number of documents to processes the query. Once complete, the function returns a new posting list and the total number of comparisons required to create the new posting list. We use this in Q4 to process the query(s) and output the results.
 
-### Q4. 
-This is the main testing file. The previous 3 files are imported in here. As the testing file, it reads all the documents in the data folder, preprocesses and tokenizes the test, and stores it in the inverted index data structure. It asks the user to create the query, checks it, runs the query against the sorted document ids, then outputs the number of matched documents with the query. 
+### Q4.
+The main file that handles the input and output of the program. This file uses the methods in the other 3 files.
 
-A video voiceover was later created to demonstrate some output against a user-created query on a dataset file. 
+The video demo focuses on Q4 since this file handles both the input and output.
 
 ## How to run the program:
-Open VS Code, install the required libraries/modules by running pip install -r .\requirements.txt in your VS code terminal, and then run Q4. It will ask you to run a number of queries; input a number in this space. When writing down each Input Sentence, don't use punctuation or quotations. When listing the operation sequence, separate each caps-locked operations by a comma (minus the final one). Do not include brackets with the operations. 
+1. Install the required libraries/modules (refer to instruction above).
+2. Run Q4.py.
+3. You will be prompted to ender the number of quieres your want to run. Enter a number and press enter.
+4. Next, you will be asked to enter the sentence for the query. Enter your sentence and press enter.
+    - Example: lion stood thoughtfully for a moment
+    - Note: DO NOT ENTER "" around the sentence. Just enter the sentence only.
+5. Finally, you will be asked to enter the operators. Make sure they are all uppercase and are seperated by comma's.
+    - Example: OR, AND, OR NOT, AND NOT. 
+    - Note: DO NOT ENTER brackets '[]'. Only enter the operators and seperate using comma's.
+6. Wait for query output 
+    - Note: Will take 2 minutes or more to run the first query as the inverted index has to be generated. This process involves reading and processing all the data files so the more data files the longer it will take.
+7. Repeat Steps 4-6 if the number of queries is greater then 1.
