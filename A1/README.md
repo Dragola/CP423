@@ -19,7 +19,7 @@ The purpose of this assignment was to create a functioning program to run querie
 ## Requirments:
 To run this project you will need to run the following command to install the required modules/libraries:
 
-!pip install -r .\requirements.txt  
+pip install -r .\requirements.txt
 
 ## Summary of files:
 ### Q1.
@@ -41,13 +41,13 @@ The video demo focuses on Q4 since this file handles both the input and output.
 ## How to run the program:
 1. Install the required libraries/modules (refer to instruction above).
 2. Run Q4.py.
-3. You will be prompted to ender the number of quieres your want to run. Enter a number and press enter.
+3. You will be prompted to ender the number of quieries your want to run. Enter a number and press enter.
 4. Next, you will be asked to enter the sentence for the query. Enter your sentence and press enter.
-    - Example: lion stood thoughtfully for a moment
+    - Example: lion stood thoughtfully for a moment.
     - Note: DO NOT ENTER "" around the sentence. Just enter the sentence only.
 5. Finally, you will be asked to enter the operators. Make sure they are all uppercase and are seperated by comma's.
     - Example: OR, AND, OR NOT, AND NOT. 
     - Note: DO NOT ENTER brackets '[]'. Only enter the operators and seperate using comma's.
-6. Wait for query output 
-    - Note: Will take 2 minutes or more to run the first query as the inverted index has to be generated. This process involves reading and processing all the data files so the more data files the longer it will take.
+6. Wait for query output.
+    - Note: Will take about 20 seconds or more to run the first query as the inverted index has to be generated. This process involves reading and processing all the data files so the more data you have the longer it will take to process and store.
 7. Repeat Steps 4-6 if the number of queries is greater then 1.
