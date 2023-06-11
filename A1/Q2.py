@@ -1,10 +1,8 @@
 '''
 IndexList:
- - Stores key-value pairs (aka index - documentID list).
+ - Stores a list of key-value pair for the tokens and posting lists.
     - The key is the word/token.
-    - The value is one of two types:
-       - Initially it's a set that holds the document ID's for the word/token. This prevents duplication of docuemntID's but isn't sorted.
-       - Later it becomes a list of sorted document ID's so that it can be used to query.
+    - The value is the posting list that's stored in a set array. This is so that when adding documentID's there are no duplicate ID's.
 '''
 class InvertedIndex:
     indexList: dict
@@ -30,11 +28,6 @@ class InvertedIndex:
             # add index to the dictionary with the document ID set
             self.indexList[word] = newSet 
 
-    # sorts each documentID set and makes then a list for each index in the list
-    def sortDocumentIDs(self):
-        for index in self.indexList:
-            self.indexList[index] = sorted(self.indexList[index])
-
     # print the list of inverted index's (DEBUG)
     def printIndexList(self):
         print("Printing inverted Index...", end="\n")
@@ -42,7 +35,6 @@ class InvertedIndex:
             print(index + " --> ", end= "")
             print(self.indexList[index], end= "\n")
         print("\n")
-
 
 '''
 Tests for the InvertedIndex class
@@ -110,39 +102,9 @@ def test_multiple_index_multi_doc():
 
     index.printIndexList()
 
-# add multiple words with multiple document ID's and sort the docuemnt ID's for each word
-def test_sort_multiple_index_multi_doc():
-    print("test_sort_doc:")
-    index = InvertedIndex()
-
-    index.addIndex("word1", 1)
-    index.addIndex("word1", 3)
-    index.addIndex("word1", 2)
-
-    index.addIndex("word2", 6)
-    index.addIndex("word2", 4)
-    index.addIndex("word2", 5)
-
-    index.addIndex("word3", 9)
-    index.addIndex("word3", 8)
-    index.addIndex("word3", 7)
-
-    index.addIndex("word4", 10)
-    index.addIndex("word4", 11)
-    index.addIndex("word4", 12)
-
-    index.addIndex("word5", 13)
-    index.addIndex("word5", 15)
-    index.addIndex("word5", 14)
-
-    index.sortDocumentIDs()
-
-    index.printIndexList()
-
 # only runs tests if this file is being run
 # if __name__ == "__main__":
 #     test_single_index_single_doc()
 #     test_multiple_index_single_doc()
 #     test_single_index_multi_doc()
 #     test_multiple_index_multi_doc()
-#     test_sort_multiple_index_multi_doc()

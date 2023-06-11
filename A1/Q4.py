@@ -1,13 +1,18 @@
+# imports
 from Q1 import preprocess_text
 from Q2 import InvertedIndex
 from Q3 import *
 import os
 
-documents: dict = {} # the files that we index from
+# Properties
+# the list of ID's to document names- used in output
+documents: dict = {}
+
+# the Inverted Index that holds a list of all the word --> posting list pairs
 invertedIndex: InvertedIndex = None
 
 '''
-Reads all the documents in the data folder, tokenize the text, and stores it in our Inverted Index data strcutre.
+Reads all the documents in the data folder, tokenize the text, and stores it in the Inverted Index data structure.
 '''
 def createInvertedIndex():
     global documents
@@ -106,20 +111,17 @@ if __name__ == "__main__":
 
                 # read all the files and create the inverted index (Q2)
                 invertedIndex = createInvertedIndex()
-
-            # sort the documentID's (NOTE: each docuemntId set becomes a list at this point)
-            invertedIndex.sortDocumentIDs()
             
             # run the query (Q3)
             result, total_comparisons = process_query(preprocessed_query, invertedIndex, len(documents))
 
-            # indicate output area
+            # indicate output
             print("\nOutput:")
 
             # output number of matched documents
             print("Number of matched documents: " + str(len(result)))
             
-            # output min number of comnparisons (only counted when AND is used)
+            # output min number of comparisons
             print("Minimum number of comparisons required: " + str(total_comparisons))
             
             # output the list of document names (+ ID's) that satisfies the query

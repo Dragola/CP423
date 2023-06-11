@@ -1,3 +1,4 @@
+# import
 from Q2 import InvertedIndex
 
 '''
@@ -20,7 +21,7 @@ def check_query_format_valid(query: str):
     return True
 
 '''
-Process the query and return the resulting posting list
+Process the query and return the resulting posting list + total comparisons count
 '''
 def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: int):
     # counter for AND operator ()
@@ -46,7 +47,7 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
     for j in range(totalDocumentID):
         totalPostingList.append(j)
 
-    # create empty set for the resulting posting list
+    # create empty list for the resulting posting list
     result = list()
 
     # Split the query into operators and operands
@@ -54,28 +55,27 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
 
         # grab previous posting list if this isn't the first operation in query
         if (len(result) > 0):
-            #print("Another operator, grabbing previous result") #DEBUG
             firstPostingList = result
 
         # get the operator
         operator = query[i]
         
-        # if NOT is used 
+        # if NOT is used
         if query[i + 1] == "NOT":
             # flip the posting list for the second word
             secondPostingList = set(totalPostingList) - set(inverted_index.indexList[query[i + 2]])
             
-            # skip over the word for next operator (if there is)
-            i += 3 
+            # skip over the word for next operator
+            i += 3
         # if NOT isn't used
         else:
             # get the posting list for the second word
             secondPostingList = set(inverted_index.indexList[query[i + 1]])
 
-            # skip over the word for next operator (if there is)
+            # skip over the word for next operator
             i += 2 
 
-        # sort the lists before doing the operation
+        # sort the lists before performing the operation
         firstPostingList = sorted(firstPostingList)
         secondPostingList = sorted(secondPostingList)
 
@@ -139,34 +139,34 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
             while p2 < len(secondPostingList):
                 result.append(secondPostingList[p2])
                 p2 +=1
-                
+
     return result, total_comparisons
 
 
 # only runs tests if this file is being run
-if __name__ == "__main__":
-    # Inverted index mapping words to numbers
-    invertedIndex = InvertedIndex()
-    invertedIndex.addIndex("apple", 1)
-    invertedIndex.addIndex("apple", 2)
-    invertedIndex.addIndex("banana", 2)
-    invertedIndex.addIndex("banana", 3)
-    invertedIndex.addIndex("cherry", 3)
-    invertedIndex.addIndex("orange", 6)
-    invertedIndex.addIndex("orange", 7)
-    invertedIndex.addIndex("berry", 2)
-    invertedIndex.addIndex("berry", 4)
-    invertedIndex.addIndex("grape", 5)
+# if __name__ == "__main__":
+#     # Inverted index mapping words to numbers
+#     invertedIndex = InvertedIndex()
+#     invertedIndex.addIndex("apple", 1)
+#     invertedIndex.addIndex("apple", 2)
+#     invertedIndex.addIndex("banana", 2)
+#     invertedIndex.addIndex("banana", 3)
+#     invertedIndex.addIndex("cherry", 3)
+#     invertedIndex.addIndex("orange", 6)
+#     invertedIndex.addIndex("orange", 7)
+#     invertedIndex.addIndex("berry", 2)
+#     invertedIndex.addIndex("berry", 4)
+#     invertedIndex.addIndex("grape", 5)
 
-    # print the inverted index
-    invertedIndex.printIndexList()
+#     # print the inverted index
+#     invertedIndex.printIndexList()
 
-    # get query
-    user_input = input("Enter the query: ")
+#     # get query
+#     user_input = input("Enter the query: ")
 
-    # process query
-    result, total_comparisons = process_query(user_input, invertedIndex, 3)
+#     # process query
+#     result, total_comparisons = process_query(user_input, invertedIndex, 3)
 
-    # print result
-    print(f"Result: {result}")
-    print("Total comparisons= " + str(total_comparisons))
+#     # print result
+#     print(f"Result: {result}")
+#     print("Total comparisons= " + str(total_comparisons))

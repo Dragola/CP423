@@ -1,8 +1,6 @@
 # imports
-
 from collections import Counter
 import re
-
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import nltk
@@ -24,10 +22,10 @@ def preprocess_text(text):
    stop_words = set(stopwords.words('english'))
    tokens = [token for token in tokens if token not in stop_words]
 
-   # excluding special characters (TODO- why is it adding a space?)
+   # excluding special characters
    tokens = [re.sub('[^a-zA-Z]', ' ', token) for token in tokens]
 
-   # remove whitespace in tokens (TODO- not sure if this is working)
+   # remove whitespace in tokens
    tokens = [token.strip() for token in tokens]
 
    # eliminating single character words
