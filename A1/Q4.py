@@ -32,32 +32,28 @@ def createInvertedIndex():
         filePath = "./data/" + file
        
         # open the file for reading
-        text = open(filePath, "r") 
+        stream = open(filePath, "r") 
 
-        # get the first line in the file
-        line = text.readline() 
+        # get the text form the file
+        text = stream.read()
 
-        # keep reading lines from the file until there are no more lines
-        while line != "":
-            #call method from Q1 to tokenize the line- a bit broken still
-            uniqueWords = preprocess_text(line)
-            
-            # add the words/tokens from the line into the index list
-            for word in uniqueWords:
-                invertedIndex.addIndex(word, documentId)
-            
-            # get the next line in the file
-            line = text.readline()
+        # tokenize the file text (Q1)
+        uniqueWords = preprocess_text(text)
+        
+        # add the words/tokens from the token list into the inverted index list
+        for word in uniqueWords:
+            invertedIndex.addIndex(word, documentId)
 
         # close the file after reading it
-        text.close()
+        stream.close()
 
         # add the document to the list of documents
         document: dict = {documentId: file}
         documents.update(document)
         
         # increment the document ID for the next file
-        documentId += 1 
+        documentId += 1
+
     return invertedIndex
 
 '''
