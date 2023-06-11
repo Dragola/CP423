@@ -103,8 +103,6 @@ if __name__ == "__main__":
             
             # generate invertedIndex only if it wasn't generated previously
             if (invertedIndex == None):
-                print("\nGenerating inverted index for first time. Please wait...")
-
                 # read all the files and create the inverted index (Q2)
                 invertedIndex = createInvertedIndex()
             
@@ -124,5 +122,3 @@ if __name__ == "__main__":
             print("List of retrieved document names")
             for documentId in result:
                 print(documents[documentId] + " | ID= " + str(documentId))
-    
-    

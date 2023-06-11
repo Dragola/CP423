@@ -44,8 +44,9 @@ def process_query(query: str, inverted_index: InvertedIndex, totalDocumentID: in
 
     # list of all the documentID's (used for NOT operator)
     totalPostingList = []
-    for j in range(totalDocumentID):
-        totalPostingList.append(j)
+    for j in range(totalDocumentID + 1):
+        if (j != 0):
+            totalPostingList.append(j)
 
     # create empty list for the resulting posting list
     result = list()
