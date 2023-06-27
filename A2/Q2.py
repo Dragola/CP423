@@ -2,8 +2,5 @@
 
 # Properties
 
-'''
-Main function
-'''
 if __name__ == "__main__":
-    print("Main")
+    print("Main for Q2")
