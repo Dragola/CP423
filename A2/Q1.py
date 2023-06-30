@@ -124,6 +124,113 @@ def preprocess_text(text):
    
    return tokens
 
+'''
+Function for searching phrase queries
+'''
+def search_phrase(index_list, phrase):
+    query_words = phrase.lower().split()
+    query_length = len(query_words)
+
+    # Check if the phrase length is greater than 5
+    if query_length > 5:
+        raise ValueError("Query length should be equal to or less than 5.")
+
+    # Find the documents containing the first word in the phrase
+    first_word = query_words[0]
+    if first_word not in index_list:
+        return []
+    first_word_docs = index_list[first_word][1]
+
+    # Initialize the result list with the document IDs from the first word
+    result = list(first_word_docs.keys())
+
+    # Iterate over the remaining words in the phrase
+    for i in range(1, query_length):
+        word = query_words[i]
+        if word not in index_list:
+            return []
+        word_docs = index_list[word][1]
+
+        # Merge the document IDs with the previous result
+        result = merge(result, list(word_docs.keys()))
+
+        # If the result becomes empty, no need to continue
+        if not result:
+            return []
+
+        # Check for positional proximity within the same document
+        result = check_positional_proximity(result, first_word_docs, word_docs, i)
+
+        # If the result becomes empty, no need to continue
+        if not result:
+            return []
+
+    return result
+
+def merge(list1, list2):
+    # Merge algorithm to combine document IDs
+    merged = []
+    i, j = 0, 0
+    while i < len(list1) and j < len(list2):
+        if list1[i] < list2[j]:
+            i += 1
+        elif list1[i] > list2[j]:
+            j += 1
+        else:
+            merged.append(list1[i])
+            i += 1
+            j += 1
+    return merged
+
+def check_positional_proximity(result, first_word_docs, word_docs, proximity):
+    # Check positional proximity within the same document
+    updated_result = []
+    for doc_id in result:
+        first_word_positions = first_word_docs[doc_id]
+        word_positions = word_docs[doc_id]
+
+        for position1 in first_word_positions:
+            for position2 in word_positions:
+                if abs(position1 - position2) == proximity:
+                    updated_result.append(doc_id)
+                    break
+            if doc_id in updated_result:
+                break
+    return updated_result
+
+'''
+Tests for the Phrase queries function
+'''
+index = PositionalIndex()
+
+# Add some sample data
+index.addIndex("apple", 1, 2)
+index.addIndex("apple", 2, 1)
+index.addIndex("with", 2, 2)
+index.addIndex("apple", 3, 9)
+index.addIndex("banana", 1, 3)
+index.addIndex("banana", 2, 3)
+index.addIndex("orange", 2, 4)
+index.addIndex("orange", 3, 8)
+
+index.printIndexList()
+
+# Test the search_phrase function
+query = "apple with banana"
+result = search_phrase(index.indexList, query)
+print(f"Search Query: '{query}'")
+print(f"Result: {result}")
+
+query = "banana orange"
+result = search_phrase(index.indexList, query)
+print(f"Search Query: '{query}'")
+print(f"Result: {result}")
+
+query = "apple banana"
+result = search_phrase(index.indexList, query)
+print(f"Search Query: '{query}'")
+print(f"Result: {result}")
+
 if __name__ == "__main__":
     #print("Main for Q1")
     test_single_word_single_doc_single_position()
