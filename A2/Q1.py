@@ -54,7 +54,7 @@ class PositionalIndex:
 
     # print the list of inverted index's (DEBUG)
     def printIndexList(self):
-        print("Printing inverted Index...", end="\n")
+        print("Printing inverted Index:", end="\n")
         for word in self.indexList:
             print("Document Frequency = " + str(self.indexList[word][0]))
             print(word + ": ", end= "")
@@ -198,41 +198,50 @@ def check_positional_proximity(result, first_word_docs, word_docs, proximity):
                 break
     return updated_result
 
+''''
+Run tests for Q1 functions (DEBUG)
 '''
-Tests for the Phrase queries function
-'''
-index = PositionalIndex()
-
-# Add some sample data
-index.addIndex("apple", 1, 2)
-index.addIndex("apple", 2, 1)
-index.addIndex("with", 2, 2)
-index.addIndex("apple", 3, 9)
-index.addIndex("banana", 1, 3)
-index.addIndex("banana", 2, 3)
-index.addIndex("orange", 2, 4)
-index.addIndex("orange", 3, 8)
-
-index.printIndexList()
-
-# Test the search_phrase function
-query = "apple with banana"
-result = search_phrase(index.indexList, query)
-print(f"Search Query: '{query}'")
-print(f"Result: {result}")
-
-query = "banana orange"
-result = search_phrase(index.indexList, query)
-print(f"Search Query: '{query}'")
-print(f"Result: {result}")
-
-query = "apple banana"
-result = search_phrase(index.indexList, query)
-print(f"Search Query: '{query}'")
-print(f"Result: {result}")
-
 if __name__ == "__main__":
-    #print("Main for Q1")
+    '''
+    Tests for Positional Index
+    '''
     test_single_word_single_doc_single_position()
     test_single_word_single_doc_multi_position()
     test_single_word_multi_doc_multi_position()
+
+
+
+    '''
+    Tests for the Phrase queries function
+    '''
+    print("Testing phrase queries...\n")
+    index = PositionalIndex()
+
+    # Add some sample data
+    index.addIndex("apple", 1, 2)
+    index.addIndex("apple", 2, 1)
+    index.addIndex("with", 2, 2)
+    index.addIndex("apple", 3, 9)
+    index.addIndex("banana", 1, 3)
+    index.addIndex("banana", 2, 2)
+    index.addIndex("banana", 2, 3)
+    index.addIndex("orange", 2, 4)
+    index.addIndex("orange", 3, 8)
+
+    index.printIndexList()
+
+    # Test the search_phrase function
+    query = "apple with banana"
+    result = search_phrase(index.indexList, query)
+    print(f"Search Query: '{query}'")
+    print(f"Result: {result}")
+
+    query = "banana orange"
+    result = search_phrase(index.indexList, query)
+    print(f"Search Query: '{query}'")
+    print(f"Result: {result}")
+
+    query = "apple banana"
+    result = search_phrase(index.indexList, query)
+    print(f"Search Query: '{query}'")
+    print(f"Result: {result}")
