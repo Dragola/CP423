@@ -1,5 +1,5 @@
 # imports
-from Q1 import PositionalIndex, preprocess_text
+from Q1 import PositionalIndex, preprocess_text, search_phrase
 import os
 
 # Properties
@@ -35,10 +35,10 @@ def createPositionalIndex():
         # get the text form the file
         text = stream.read()
 
-        # tokenize the file text (Q1)
+        # tokenize the file text
         uniqueWords = preprocess_text(text)
         
-        # add the words/tokens from the token list into the position index list
+        # add the words/tokens from the token list into the position index
         for word in uniqueWords:
             invertedIndex.addIndex(word, documentId, uniqueWords[word])
 
@@ -54,7 +54,7 @@ def createPositionalIndex():
 
     return invertedIndex
 
-# output based on lecture slide (Week 2- Part 2 SLide 9) (DEBUG ONLY)
+# output based on lecture slide (Week 2- Part 2 SLide 9) #DEBUG
 def writePositionalIndex():
     stream = open("./positionalIndex.txt", "w")
 
@@ -91,10 +91,10 @@ def writePositionalIndex():
     stream.close()
 
 '''
-Main function- we'll use this one to use Q1 and Q2
+Main function
 '''
 if __name__ == "__main__":
-    # generate invertedIndex only if it wasn't generated previously
+    # generate positional index only if it wasn't generated previously
     if (positionalIndex == None):
         print("Creating Positional Index...")
 
@@ -103,5 +103,5 @@ if __name__ == "__main__":
 
         print("Finished creating Positional Index.")
 
-    # write index to txt file
+    # write index to txt file #DEBUG
     writePositionalIndex()

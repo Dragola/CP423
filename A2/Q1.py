@@ -101,6 +101,7 @@ def test_single_word_multi_doc_multi_position():
 
 '''
 Function for preprocessing the text
+- TODO- Positions don't seen accurate for some words (could be before or after the actual position), need to look into.
 '''
 def preprocess_text(text) -> list[dict]:
    # convert all text to lowercase
