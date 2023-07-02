@@ -38,12 +38,9 @@ def createPositionalIndex():
         # tokenize the file text (Q1)
         uniqueWords = preprocess_text(text)
         
-        wordPosition = 1
-
         # add the words/tokens from the token list into the position index list
         for word in uniqueWords:
-            invertedIndex.addIndex(word, documentId, wordPosition)
-            wordPosition += 1
+            invertedIndex.addIndex(word, documentId, uniqueWords[word])
 
         # close the file after reading it
         stream.close()
@@ -60,6 +57,15 @@ def createPositionalIndex():
 # output based on lecture slide (Week 2- Part 2 SLide 9) (DEBUG ONLY)
 def writePositionalIndex():
     stream = open("./positionalIndex.txt", "w")
+
+
+    # print document and their ID's
+    for docID in documents:
+        stream.write(documents[docID] + "| docID= " + str(docID) + "\n")
+
+    # space for index
+    stream.write("\n")
+
     for word in positionalIndex.indexList:
         # print first line (word/token + document frequency)
         firstLine = "{" + word + ": (" + str(positionalIndex.indexList[word][0]) + ", {\n"

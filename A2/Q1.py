@@ -102,12 +102,19 @@ def test_single_word_multi_doc_multi_position():
 '''
 Function for preprocessing the text
 '''
-def preprocess_text(text):
+def preprocess_text(text) -> list[dict]:
    # convert all text to lowercase
    text = text.lower()
 
    # tokenization of text
    tokens = word_tokenize(text)
+
+   token_with_position: dict = {}
+   position = 1
+   # determine the positions of each token
+   for token in tokens:
+       token_with_position[token] = position
+       position += 1
    
    # removing stopwords
    stop_words = set(stopwords.words('english'))
@@ -121,8 +128,13 @@ def preprocess_text(text):
 
    # eliminating single character words
    tokens = [token for token in tokens if len(token) > 1]
-   
-   return tokens
+
+   # check what tokens where removed and return a new dict containing only the valid tokens with their positions
+   result: dict = {}
+   for token in token_with_position:
+       if token in tokens:
+           result[token] = token_with_position[token]
+   return result
 
 '''
 Function for searching phrase queries
