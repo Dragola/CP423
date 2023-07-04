@@ -29,7 +29,18 @@ def generate_tfidf_matrix(document_count:int, pos_ind:PositionalIndex):
         row = 0  
     return matrix
    
-def query_vector():
+def query_vector(query,term_count, pos_ind:PositionalIndex):
+    query_vector = np.array([0]*(term_count))
+    col = 0
+    for word in pos_ind.indexList:
+        if word in query:
+            query_vector[col] = 1
+        col += 1
+    return query_vector
+    
+def calculate_tf_idf ():
+    
+    
          
             
 if __name__ == "__main__":
@@ -58,3 +69,5 @@ if __name__ == "__main__":
     """
     matrix = generate_tfidf_matrix(3, index)
     print(matrix)
+    queryvector = query_vector("apple", 4, index)
+    print(queryvector)
