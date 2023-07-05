@@ -140,8 +140,8 @@ def preprocess_text(text) -> list[dict]:
 '''
 Function for searching phrase queries
 '''
-def search_phrase(index_list, processed_text: list):
-    query_words = processed_text
+def search_phrase(index_list, phrase):
+    query_words = phrase.lower().split()
     query_length = len(query_words)
 
     # Check if the phrase length is greater than 5
@@ -151,17 +151,20 @@ def search_phrase(index_list, processed_text: list):
     # Find the documents containing the first word in the phrase
     first_word = query_words[0]
     if first_word not in index_list:
-        return []
+        return [], {}
     first_word_docs = index_list[first_word][1]
 
     # Initialize the result list with the document IDs from the first word
     result = list(first_word_docs.keys())
 
+    # Initialize a dictionary to store the positions of all words in the phrase
+    phrase_positions = {doc_id: [] for doc_id in result}
+
     # Iterate over the remaining words in the phrase
     for i in range(1, query_length):
         word = query_words[i]
         if word not in index_list:
-            return []
+            return [], {}
         word_docs = index_list[word][1]
 
         # Merge the document IDs with the previous result
@@ -169,16 +172,25 @@ def search_phrase(index_list, processed_text: list):
 
         # If the result becomes empty, no need to continue
         if not result:
-            return []
+            return [], {}
 
         # Check for positional proximity within the same document
-        result = check_positional_proximity(result, first_word_docs, word_docs, i)
+        result, updated_positions = check_positional_proximity(result, phrase_positions, first_word_docs, word_docs, i)
 
         # If the result becomes empty, no need to continue
         if not result:
-            return []
+            return [], {}
 
-    return result
+        # Update the positions of all words in the phrase
+        phrase_positions = updated_positions
+
+    # Filter out document IDs that don't have all the words in the phrase
+    filtered_result = [doc_id for doc_id in result if len(phrase_positions[doc_id]) == query_length]
+
+    # Filter phrase_positions for the filtered_result
+    filtered_phrase_positions = {doc_id: positions for doc_id, positions in phrase_positions.items() if doc_id in filtered_result}
+
+    return filtered_result[0] if filtered_result else [], filtered_phrase_positions
 
 def merge(list1, list2):
     # Merge algorithm to combine document IDs
@@ -195,21 +207,26 @@ def merge(list1, list2):
             j += 1
     return merged
 
-def check_positional_proximity(result, first_word_docs, word_docs, proximity):
+def check_positional_proximity(result, phrase_positions, first_word_docs, word_docs, proximity):
     # Check positional proximity within the same document
     updated_result = []
+    updated_positions = {doc_id: [] for doc_id in result}
+
     for doc_id in result:
         first_word_positions = first_word_docs[doc_id]
         word_positions = word_docs[doc_id]
 
         for position1 in first_word_positions:
             for position2 in word_positions:
-                if abs(position1 - position2) == proximity:
+                if position2 > position1 and position2 - position1 == proximity:
                     updated_result.append(doc_id)
+                    positions = list(range(position1, position2 + 1))
+                    updated_positions[doc_id].extend(positions)
                     break
             if doc_id in updated_result:
                 break
-    return updated_result
+
+    return updated_result, updated_positions
 
 ''''
 Run tests for Q1 functions (DEBUG)
