@@ -140,8 +140,8 @@ def preprocess_text(text) -> list[dict]:
 '''
 Function for searching phrase queries
 '''
-def search_phrase(index_list, phrase):
-    query_words = phrase.lower().split()
+def search_phrase(index_list, processed_text: list):
+    query_words = processed_text
     query_length = len(query_words)
 
     # Check if the phrase length is greater than 5

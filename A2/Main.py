@@ -138,13 +138,17 @@ if __name__ == "__main__":
                 exit()
 
             case 1: # phrase query
-                # TODO- Does this need to be processed (remove stop words or punctuation?) or just pass it in?
+                # get phrase
                 phrase = input("Enter a phrase to query: ")
 
+                # generate the Positional index if it wasn't previously
                 checkToLoadDataFiles()
 
+                # preprocess the phrase
+                text = preprocess_text(phrase)
+
                 # run the function for phrase query
-                result_list = search_phrase(positionalIndex.indexList, phrase)
+                result_list = search_phrase(positionalIndex.indexList, text)
 
                 # output the result
                 # TODO- Should print the position the phrase starts at.
