@@ -1,5 +1,6 @@
 # imports
 from Q1 import PositionalIndex, preprocess_text, search_phrase
+from Q2 import *
 import os
 
 # Properties
@@ -90,12 +91,9 @@ def writePositionalIndex():
         stream.write("}\n\n")
     stream.close()
 
-'''
-Main function
-'''
+def checkToLoadDataFiles():
+    global positionalIndex
 
-#TODO- Add option to pick one of 3 main functions (phrase will require input)
-if __name__ == "__main__":
     # generate positional index only if it wasn't generated previously
     if (positionalIndex == None):
         print("Creating Positional Index...")
@@ -105,7 +103,73 @@ if __name__ == "__main__":
 
         print("Finished creating Positional Index.")
 
-    # write index to txt file #DEBUG
-    writePositionalIndex()
+        # write index to txt file #DEBUG
+        writePositionalIndex()
 
-    phrase = input("Enter a phrase to query")
+'''
+Main function
+'''
+if __name__ == "__main__":
+    option = ""
+
+    # keep asking for an option until program is exited
+    while option != "0":
+        print("Options:")
+        print("0 = Exit program\n")
+        print("1 = Phrase Query\n")
+        print("2 = TD-IDF\n")
+        print("3 = Cosine\n")
+
+        # get input
+        option = input("Enter an option: ")
+
+        # attempt to get int value from input
+        try:
+            option_num = int(option)
+        except:
+            print("That's not a number, please try again with a number")
+            option_num = -1
+
+        match option_num:
+            case -1: # no number provided (skip)
+                print("\n")
+
+            case 0: # exit program
+                exit()
+
+            case 1: # phrase query
+                # TODO- Does this need to be processed (remove stop words or punctuation?) or just pass it in?
+                phrase = input("Enter a phrase to query: ")
+
+                checkToLoadDataFiles()
+
+                # run the function for phrase query
+                result_list = search_phrase(positionalIndex.indexList, phrase)
+
+                # output the result
+                # TODO- Should print the position the phrase starts at.
+                print("Documents that contain the phrase" + result_list)
+
+            case 2: # TD-IDF
+                checkToLoadDataFiles()
+                
+                # generate the TF-IDF matrix
+                td_ifd_matrix = generate_tfidf_matrix()
+
+                # create query vector
+
+                # call other functions that need to be called for this
+
+                # output result
+
+            case 3: # Cosine
+                print("Cosine option")
+                checkToLoadDataFiles()
+
+                # call functions to run this
+
+                # output result
+                
+            case _:
+                print("Invalid option")
+                
