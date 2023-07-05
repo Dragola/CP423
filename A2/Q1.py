@@ -242,17 +242,17 @@ if __name__ == "__main__":
     index.printIndexList()
 
     # Test the search_phrase function
-    query = "apple with banana"
+    query = ["apple", "with", "banana"]
     result = search_phrase(index.indexList, query)
     print(f"Search Query: '{query}'")
     print(f"Result: {result}")
 
-    query = "banana orange"
+    query = ["banana", "orange"]
     result = search_phrase(index.indexList, query)
     print(f"Search Query: '{query}'")
     print(f"Result: {result}")
 
-    query = "apple banana"
+    query = ["apple", "banana"]
     result = search_phrase(index.indexList, query)
     print(f"Search Query: '{query}'")
     print(f"Result: {result}")
