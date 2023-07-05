@@ -222,8 +222,6 @@ if __name__ == "__main__":
     test_single_word_single_doc_multi_position()
     test_single_word_multi_doc_multi_position()
 
-
-
     '''
     Tests for the Phrase queries function
     '''

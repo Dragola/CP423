@@ -93,15 +93,19 @@ def writePositionalIndex():
 '''
 Main function
 '''
+
+#TODO- Add option to pick one of 3 main functions (phrase will require input)
 if __name__ == "__main__":
     # generate positional index only if it wasn't generated previously
     if (positionalIndex == None):
         print("Creating Positional Index...")
 
-        # read all the files and create the inverted index (Q2)
+        # read all the files and create the inverted index
         positionalIndex = createPositionalIndex()
 
         print("Finished creating Positional Index.")
 
     # write index to txt file #DEBUG
     writePositionalIndex()
+
+    phrase = input("Enter a phrase to query")
