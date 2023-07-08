@@ -1,6 +1,9 @@
 # imports
 import numpy as np #required to generate matrix
 import math as math #required to perform log functions
+
+from numpy.linalg import norm
+
 from Q1 import *
 # Properties
 
@@ -90,6 +93,16 @@ def relevant_doc (result):
             list.append(score)
     list.sort(reverse=True)
     return list[:5]
+
+#returns top 5 relevant documents based on cosine similarity scores
+def cosine_sim(query_tfidf_scores, tfidf_matrix):
+
+    cosine_scores = np.dot(query_tfidf_scores, tfidf_matrix)/(norm(query_tfidf_scores)*norm(tfidf_matrix))
+
+    top_5 = np.argsort(cosine_scores, axis=1)[0][::-1][:5]
+
+    return top_5
+    
 
 if __name__ == "__main__":
     
