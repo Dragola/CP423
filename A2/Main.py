@@ -187,7 +187,7 @@ if __name__ == "__main__":
                 print(query_vec)
 
                 # find top 5 relevant documents
-                top_5 = relevant_doc(query_vec, td_ifd_matrix)
+                top_5 = relevant_doc(query_vec, td_ifd_matrix, len(documents))
                 print("\nTF-IDF Result:")
                 print("Top 5 dopcumets are:")
                 for doc in top_5:
@@ -226,7 +226,7 @@ if __name__ == "__main__":
                 print(query_vec)
 
                 # find top 5 relevant documents
-                top_5 = cosine_sim(query_vec, td_ifd_matrix)
+                top_5 = cosine_sim(query_vec, td_ifd_matrix, len(documents))
                 print("\nCosine Similarity Result:")
                 print("Top 5 dopcumets are:")
                 for doc in top_5:

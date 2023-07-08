@@ -84,10 +84,17 @@ def calculate_tf_idf (query_vector, word, docID, pos_ind:PositionalIndex, docume
     result = value * query_vector
     return (result)
 
-#return top 5 relevent documents by returning top 5 tf-idf scores
-def relevant_doc(query_vector, tf_idf_matrix): 
-    #calculate tfidf scores at each matrix position and append them to a list then sort the list in descending scores
-    scores = np.dot(query_vector, tf_idf_matrix)
+#get top 5 relevent documents by returning top 5 tf-idf scores
+def relevant_doc(query_vector, tf_idf_matrix, document_count: int): 
+    scores = np.array([0]*(document_count), dtype = "float")
+
+    column = 0
+
+    # calculate the score and store in array
+    for row in tf_idf_matrix:
+        score = np.dot(query_vector, row)
+        scores[column] = score
+        column += 1
 
     print("\nScores:")
     print(scores)
@@ -95,23 +102,36 @@ def relevant_doc(query_vector, tf_idf_matrix):
     # determine the order of the scores (sorts lowest to highest)
     sorted_indecies = np.argsort(scores)
 
+    print("\nsorted_indecies:")
+    print(sorted_indecies)
+
     # reverse the index's from the sorted list and grab the first 5 (aka 5 highest relevant docID's)
     top_5_doc = sorted_indecies[::-1][-5:]
 
     return top_5_doc
 
-#returns top 5 relevant documents based on cosine similarity scores
-#TODO- Need to run for all 5 TF weight calculations
-def cosine_sim(query_vector, tfidf_matrix):
+#get top 5 relevant documents based on cosine similarity scores
+def cosine_sim(query_vector, tfidf_matrix, document_count: int):
+    cosine_scores = np.array([0]*(document_count), dtype = "float")
 
-    # get the dot product
-    cosine_scores = np.dot(query_vector, tfidf_matrix)/(norm(query_vector)*norm(tfidf_matrix))
-    
+    column = 0
+
+    # calculate the score and store in array
+    for row in tfidf_matrix:
+        score = np.dot(query_vector, row)
+        if (score > 0):
+            score = score/(norm(query_vector)*norm(row))
+        cosine_scores[column] = score
+        column += 1
+
     print("\nCosine Scores:")
     print(cosine_scores)
 
     # determine the order of the scores (sorts lowest to highest)
     sorted_indecies = np.argsort(cosine_scores)
+
+    print("\nsorted_indecies:")
+    print(sorted_indecies)
 
     # reverse the index's from the sorted list and grab the first 5 (aka 5 highest relevant docID's)
     top_5_doc = sorted_indecies[::-1][-5:]
@@ -153,14 +173,14 @@ if __name__ == "__main__":
     print(query_vec)
 
     # test TD-IDF
-    top = relevant_doc(query_vec, matrix)
+    top = relevant_doc(query_vec, matrix, 4)
     print("\nTF-IDF Result:")
     print("Top 5 dopcumets are:")
     for doc in top:
         print("Document " + str(doc + 1) + " (index " + str(doc) + ")")
 
     # test cosine similarity
-    top_cosine = cosine_sim(query_vec, matrix)
+    top_cosine = cosine_sim(query_vec, matrix, 4)
     print("\nCosine Similarity Result:")
     print("Top 5 dopcumets are:")
     for doc in top:
