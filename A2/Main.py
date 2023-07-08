@@ -4,7 +4,7 @@ from Q2 import *
 import os
 
 # Properties
-# the list of ID's to document names- used in output
+# the list of ID's to document names
 documents: dict = {}
 
 # the Positional Index that will hold all the document data
@@ -130,6 +130,12 @@ if __name__ == "__main__":
             print("That's not a number, please try again with a number")
             option_num = -1
 
+        # get phrase
+        phrase = input("Enter the query: ")
+
+        # preprocess the phrase
+        processed_text = preprocess_text(phrase)
+
         match option_num:
             case -1: # no number provided (skip)
                 print("\n")
@@ -138,41 +144,94 @@ if __name__ == "__main__":
                 exit()
 
             case 1: # phrase query
-                # get phrase
-                phrase = input("Enter a phrase to query: ")
-
                 # generate the Positional index if it wasn't previously
                 checkToLoadDataFiles()
 
-                # preprocess the phrase
-                text = preprocess_text(phrase)
-
                 # run the function for phrase query
-                result_list = search_phrase(positionalIndex.indexList, text)
+                result_list = search_phrase(positionalIndex.indexList, processed_text)
 
                 # output the result
                 # TODO- Should print the position the phrase starts at.
                 print("Documents that contain the phrase" + result_list)
 
             case 2: # TD-IDF
-                checkToLoadDataFiles()
+                # print options for TF-IDF
+                print("Pick an option for the TF weight scheme:")
+                print("1 = Binary\n")
+                print("2 = Raw count\n")
+                print("3 = Term Frequency\n")
+                print("4 = Log Normalization\n")
+                print("5 = Double Normalization\n")
+                option = input("Enter an option: ")
+
+                # attempt to get int value from input
+                try:
+                    option_num = int(option)
+                except:
+                    print("That's not a number, please try again with a number")
+                    break
                 
+                if (option_num < 0 and option_num > 6):
+                    print("Invalid option selected!")
+                    break
+
+                # generate the Positional index if it wasn't previously
+                checkToLoadDataFiles()
+
                 # generate the TF-IDF matrix
-                td_ifd_matrix = generate_tfidf_matrix()
+                td_ifd_matrix = generate_tfidf_matrix(positionalIndex, len(documents), option_num)
 
                 # create query vector
+                query_vec = query_vector(processed_text, len(positionalIndex.indexList), positionalIndex)
+                print("\nQuery vector:")
+                print(query_vec)
 
-                # call other functions that need to be called for this
-
-                # output result
+                # find top 5 relevant documents
+                top_5 = relevant_doc(query_vec, td_ifd_matrix)
+                print("\nTF-IDF Result:")
+                print("Top 5 dopcumets are:")
+                for doc in top_5:
+                    print("Document " + str(doc + 1) + " (index " + str(doc) + ")")
 
             case 3: # Cosine
-                print("Cosine option")
+                # print options for TF-IDF
+                print("Pick an option for the TF weight scheme:")
+                print("1 = Binary\n")
+                print("2 = Raw count\n")
+                print("3 = Term Frequency\n")
+                print("4 = Log Normalization\n")
+                print("5 = Double Normalization\n")
+                option = input("Enter an option: ")
+
+                # attempt to get int value from input
+                try:
+                    option_num = int(option)
+                except:
+                    print("That's not a number, please try again with a number")
+                    break
+                
+                if (option_num < 0 and option_num > 6):
+                    print("Invalid option selected!")
+                    break
+
+                # generate the Positional index if it wasn't previously
                 checkToLoadDataFiles()
 
-                # call functions to run this
+                # generate the TF-IDF matrix
+                td_ifd_matrix = generate_tfidf_matrix(positionalIndex, len(documents), option_num)
 
-                # output result
+                # create query vector
+                query_vec = query_vector(processed_text, len(positionalIndex.indexList), positionalIndex)
+                print("\nQuery vector:")
+                print(query_vec)
+
+                # find top 5 relevant documents
+                top_5 = cosine_sim(query_vec, td_ifd_matrix)
+                print("\nCosine Similarity Result:")
+                print("Top 5 dopcumets are:")
+                for doc in top_5:
+                    print("Document " + str(doc + 1) + " (index " + str(doc) + ")")
+
                 
             case _:
                 print("Invalid option")
