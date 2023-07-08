@@ -53,17 +53,18 @@ def tf_idf(word, docID, pos_ind:PositionalIndex, document_count:int, weight_sche
     return result
 
 #populate matrix with tfidf generated values
-def generate_tfidf_matrix(word, doc, pos_ind:PositionalIndex, document_count:int, weight_scheme):
-    row = 0
+def generate_tfidf_matrix(pos_ind:PositionalIndex, document_count:int, weight_scheme: int):
     col = 0
+
+    #generate the matrix
     matrix = generate_matrix(document_count, pos_ind)
+
+    #calculate the tf-idf for each word and put value in the matrix
     for word in pos_ind.indexList:
         for doc in pos_ind.indexList[word][1]:
             tfidf = tf_idf(word, doc, pos_ind, document_count, weight_scheme)
-            matrix[row][col]= tfidf
-            row += 1
+            matrix[doc -1][col]= tfidf
         col += 1 
-        row = 0  
     return matrix
 
 #create query vector
