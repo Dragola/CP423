@@ -139,7 +139,7 @@ def preprocess_text(text) -> list[dict]:
 '''
 Function for searching phrase queries
 '''
-def search_phrase(index_list, phrase: str):
+def search_phrase(index_list, phrase):
     query_words = phrase.lower().split()
     query_length = len(query_words)
 
@@ -150,7 +150,7 @@ def search_phrase(index_list, phrase: str):
     # Find the documents containing the first word in the phrase
     first_word = query_words[0]
     if first_word not in index_list:
-        return [], {}
+        return {}
     first_word_docs = index_list[first_word][1]
 
     # Initialize the result list with the document IDs from the first word
@@ -163,7 +163,7 @@ def search_phrase(index_list, phrase: str):
     for i in range(1, query_length):
         word = query_words[i]
         if word not in index_list:
-            return [], {}
+            return {}
         word_docs = index_list[word][1]
 
         # Merge the document IDs with the previous result
@@ -171,25 +171,22 @@ def search_phrase(index_list, phrase: str):
 
         # If the result becomes empty, no need to continue
         if not result:
-            return [], {}
+            return {}
 
         # Check for positional proximity within the same document
         result, updated_positions = check_positional_proximity(result, phrase_positions, first_word_docs, word_docs, i)
 
         # If the result becomes empty, no need to continue
         if not result:
-            return [], {}
+            return {}
 
         # Update the positions of all words in the phrase
         phrase_positions = updated_positions
 
     # Filter out document IDs that don't have all the words in the phrase
-    filtered_result = [doc_id for doc_id in result if len(phrase_positions[doc_id]) == query_length]
+    filtered_result = {doc_id: positions for doc_id, positions in phrase_positions.items() if len(positions) == query_length}
 
-    # Filter phrase_positions for the filtered_result
-    filtered_phrase_positions = {doc_id: positions for doc_id, positions in phrase_positions.items() if doc_id in filtered_result}
-
-    return filtered_result[0] if filtered_result else [], filtered_phrase_positions
+    return filtered_result
 
 def merge(list1, list2):
     # Merge algorithm to combine document IDs
