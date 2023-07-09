@@ -130,15 +130,21 @@ if __name__ == "__main__":
             print("That's not a number, please try again with a number")
             option_num = -1
 
-        # get phrase
-        phrase = input("Enter the query: ")
+        # if not exiting prgram or bad input
+        if(option_num > 0 and option_num < 4):
+            # get phrase
+            phrase = input("Enter the query: ")
 
-        # preprocess the phrase
-        processed_text: dict = preprocess_text(phrase)
+            # preprocess the phrase
+            processed_text: dict = preprocess_text(phrase)
+        
+        # bad number
+        else:
+            option_num = -1
 
         match option_num:
-            case -1: # no number provided (skip)
-                print("\n")
+            case -1: # bad number
+                print("Invalid input, please enter a number between 0 and 3.\n")
 
             case 0: # exit program
                 exit()
@@ -190,13 +196,13 @@ if __name__ == "__main__":
                     checkToLoadDataFiles()
 
                     # generate the TF-IDF matrix
-                    td_ifd_matrix = generate_tfidf_matrix(positionalIndex, len(documents), option_num)
+                    tf_ifd_matrix = generate_tfidf_matrix(positionalIndex, len(documents), option_num)
 
                     # create query vector
                     query_vec = query_vector(processed_text, len(positionalIndex.indexList), positionalIndex)
 
                     # find top 5 relevant documents
-                    top_5 = relevant_doc(query_vec, td_ifd_matrix, len(documents))
+                    top_5 = relevant_doc(query_vec, tf_ifd_matrix, len(documents))
                     print("\nTF-IDF Result:")
                     print("Top 5 dopcumets are:")
                     for doc in top_5:
@@ -233,13 +239,15 @@ if __name__ == "__main__":
                     checkToLoadDataFiles()
 
                     # generate the TF-IDF matrix
-                    td_ifd_matrix = generate_tfidf_matrix(positionalIndex, len(documents), option_num)
+                    tf_ifd_matrix = generate_tfidf_matrix(positionalIndex, len(documents), option_num)
+                    print("TD-IDF Matrix")
+                    print(tf_ifd_matrix)
 
                     # create query vector
                     query_vec = query_vector(processed_text, len(positionalIndex.indexList), positionalIndex)
 
                     # find top 5 relevant documents
-                    top_5 = cosine_sim(query_vec, td_ifd_matrix, len(documents))
+                    top_5 = cosine_sim(query_vec, tf_ifd_matrix, len(documents))
                     print("\nCosine Similarity Result:")
                     print("Top 5 dopcumets are:")
                     for doc in top_5:
