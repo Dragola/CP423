@@ -76,7 +76,41 @@ Read as { DocId: [Positions of the phrase], ...}
 {3: [7664, 7665], 8: [8081, 8082], 53: [1451, 1452], 86: [10331, 10332], 131: [6473, 6474], 206: [10004, 10005]}
 
 ### TF-IDF
-Example...
+Options:
+0 = Exit program
+
+1 = Phrase Query
+
+2 = TD-IDF
+
+3 = Cosine
+
+Enter an option: 2
+Enter the query: sherlock holmes
+Pick an option for the TF weight scheme:
+1 = Binary
+
+2 = Raw count
+
+3 = Term Frequency
+
+4 = Log Normalization
+
+5 = Double Normalization
+
+Enter an option: 1
+
+Creating Positional Index for the first time...
+Finished creating Positional Index.
+
+
+TF-IDF Result:
+Top 5 dopcumets are:
+Document 189
+Document 213
+Document 45
+Document 218
+Document 102
 
 ### Cosine Similarity
 Example...
