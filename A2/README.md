@@ -25,10 +25,10 @@ pip install -r .\requirements.txt
 ### Q1.
 Contains the positional index data structure along with preprocessing function and phrase queries functions.
 - The positional index structure allows the addition/updating of index's and can print the structure for debugging.
-- The phrase query functions ...
+- The phrase query functions
 
 Assumption:
-In phrase queries function we made an assumption that the user want to search for phrase that exist within the documents so the input would take a phrase and then the output would show in format: (docID, {docID: [position of the word]}) (the position would be in an order because each word needs to be next to each other). If user enter phrase that does not exist in the document it will return empty result. 
+In phrase queries function we made an assumption that the user want to search for phrase that exist within the documents so the input would take a phrase and then the output would show in format: {docID: [position of the word]} (the position would be in an order because each word needs to be next to each other). If user enter phrase that does not exist in the document it will return empty result. 
 
 ### Q2.
 Contains the TF, TF-IDF, and Cosine similarity functions. Q2 generates the matrix with its appropriate size and fills it with zeros. There's a function to calculate the TF-IDF numbers then populate the existing matrix with those numbers. The query vector is then generated in a separate function. To calculate the tf-idf score we need the tf-idf numbers from the matrix multiplied by the query vector generated (or more specifically the dot product between the two values). There's also another function that returns the top 5 most relevant documents based on the top 5 highest calculated tf-idf scores. The cosine_sim function is similar to the function that returns the top 5 most relevant documents based on tf-idf scores. The only difference is the top 5 values are based off the cosine similarity scores, instead. 
@@ -75,6 +75,7 @@ Finished creating Positional Index.
 Documents that contain the phrase
 
 Read as { DocId: [Positions of the phrase], ...}
+
 {3: [7664, 7665], 8: [8081, 8082], 53: [1451, 1452], 86: [10331, 10332], 131: [6473, 6474], 206: [10004, 10005]}
 
 ### TF-IDF
@@ -107,7 +108,6 @@ Enter an option: 1
 
 Creating Positional Index for the first time...
 Finished creating Positional Index.
-
 
 TF-IDF Result:
 
@@ -148,7 +148,6 @@ Enter an option: 1
 
 Creating Positional Index for the first time...
 Finished creating Positional Index.
-
 
 Cosine Similarity Result:
 
