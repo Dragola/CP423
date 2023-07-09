@@ -30,7 +30,8 @@ In phrase queries function we made an assumption that the user want to search fo
 ### Q2.
 Contains the TF, TF-IDF, and Cosine similarity functions.
 
-Any assumptions?
+Assumption:
+Log is always base 10 for any calculation. 
 
 ## How to run the program:
 1. Refer to Requirements to install the required libraries.
