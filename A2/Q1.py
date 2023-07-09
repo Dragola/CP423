@@ -158,7 +158,7 @@ def search_phrase(index_list, phrase):
 
     # Initialize a dictionary to store the positions of all words in the phrase
     phrase_positions = {doc_id: [] for doc_id in result}
-
+	
     # Iterate over the remaining words in the phrase
     for i in range(1, query_length):
         word = query_words[i]
