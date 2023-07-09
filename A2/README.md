@@ -24,6 +24,8 @@ pip install -r .\requirements.txt
 ## Summary of files:
 ### Q1.
 Contains the positional index data structure along with preprocessing function and phrase queries functions.
+- The positional index structure allows the addition/updating of index's and can print the structure for debugging.
+- The phrase query functions ...
 
 Assumption:
 In phrase queries function we made an assumption that the user want to search for phrase that exist within the documents so the input would take a phrase and then the output would show in format: (docID, {docID: [position of the word]}) (the position would be in an order because each word needs to be next to each other). If user enter phrase that does not exist in the document it will return empty result. 
@@ -113,4 +115,38 @@ Document 218
 Document 102
 
 ### Cosine Similarity
-Example...
+Options:
+0 = Exit program
+
+1 = Phrase Query
+
+2 = TD-IDF
+
+3 = Cosine
+
+Enter an option: 3
+Enter the query: sherlock holmes
+Pick an option for the TF weight scheme:
+1 = Binary
+
+2 = Raw count
+
+3 = Term Frequency
+
+4 = Log Normalization
+
+5 = Double Normalization
+
+Enter an option: 1
+
+Creating Positional Index for the first time...
+Finished creating Positional Index.
+
+
+Cosine Similarity Result:
+Top 5 dopcumets are:
+Document 238
+Document 5
+Document 3
+Document 201
+Document 170
