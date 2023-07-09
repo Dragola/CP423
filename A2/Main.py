@@ -127,19 +127,6 @@ if __name__ == "__main__":
         try:
             option_num = int(option)
         except:
-            print("That's not a number, please try again with a number")
-            option_num = -1
-
-        # if not exiting prgram or bad input
-        if(option_num > 0 and option_num < 4):
-            # get phrase
-            phrase = input("Enter the query: ")
-
-            # preprocess the phrase
-            processed_text: dict = preprocess_text(phrase)
-        
-        # bad number
-        else:
             option_num = -1
 
         match option_num:
@@ -150,6 +137,12 @@ if __name__ == "__main__":
                 exit()
 
             case 1: # phrase query
+                # get phrase
+                phrase = input("Enter the query: ")
+
+                # preprocess the phrase
+                processed_text: dict = preprocess_text(phrase)
+                
                 # generate the Positional index if it wasn't previously
                 checkToLoadDataFiles()
 
@@ -168,6 +161,12 @@ if __name__ == "__main__":
                 print()
 
             case 2: # TD-IDF
+                # get phrase
+                phrase = input("Enter the query: ")
+
+                # preprocess the phrase
+                processed_text: dict = preprocess_text(phrase)
+                
                 # print options for TF-IDF
                 print("Pick an option for the TF weight scheme:")
                 print("1 = Binary\n")
@@ -211,6 +210,12 @@ if __name__ == "__main__":
                     print("Invalid input. Please make sure to enter a number between 1 and 5.\n")
 
             case 3: # Cosine
+                # get phrase
+                phrase = input("Enter the query: ")
+
+                # preprocess the phrase
+                processed_text: dict = preprocess_text(phrase)
+
                 # print options for TF-IDF
                 print("Pick an option for the TF weight scheme:")
                 print("1 = Binary\n")
@@ -256,5 +261,5 @@ if __name__ == "__main__":
                     print("Invalid input. Please make sure to enter a number between 1 and 5.\n")
 
             case _:
-                print("Invalid option!")
+                print("Invalid option, please enter a number between 0 and 3.\n")
                 
