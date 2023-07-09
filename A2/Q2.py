@@ -48,9 +48,14 @@ def tf_idf(word: str, docID: int, pos_ind:PositionalIndex, document_count:int, w
         print("Error: that is not a valid weight scheme.")
         return -1
 
-    idf = float(document_count)/float(pos_ind.indexList[word][0]) + 1
-    result = tf*(math.log(idf,10))
-    #print(result)
+    #print(word + "| doc= " + str(docID))
+    #print("tf= " + str(tf))
+    #print("document_count= " + str(document_count) + ", word freq= " + str(pos_ind.indexList[word][0]))
+    
+    idf = float(document_count)/float((pos_ind.indexList[word][0]) + 1)
+    #print("idf= " + str(idf))
+    result = tf*(math.log(idf,2))
+    #print("tf-idf= " + str(result) + "\n")
     return result
 
 #populate matrix with tfidf generated values
@@ -102,9 +107,6 @@ def relevant_doc(query_vector, tf_idf_matrix, document_count: int):
     # determine the order of the scores (sorts lowest to highest)
     sorted_indecies = np.argsort(scores)
 
-    print("\nsorted_indecies:")
-    print(sorted_indecies)
-
     # reverse the index's from the sorted list and grab the first 5 (aka 5 highest relevant docID's)
     top_5_doc = sorted_indecies[::-1][-5:]
 
@@ -129,9 +131,6 @@ def cosine_sim(query_vector, tfidf_matrix, document_count: int):
 
     # determine the order of the scores (sorts lowest to highest)
     sorted_indecies = np.argsort(cosine_scores)
-
-    print("\nsorted_indecies:")
-    print(sorted_indecies)
 
     # reverse the index's from the sorted list and grab the first 5 (aka 5 highest relevant docID's)
     top_5_doc = sorted_indecies[::-1][-5:]
@@ -162,13 +161,13 @@ if __name__ == "__main__":
     index.printIndexList()
 
     # generate TF-IDF matrix
-    matrix = generate_tfidf_matrix(index, 4, 1)
+    matrix = generate_tfidf_matrix(index, 4, 2)
     print("\nTF-IDF Matrix:")
     print(index.indexList.keys())
     print(matrix)
     
     # create query vector
-    query_vec = query_vector(["apple"], 4, index)
+    query_vec = query_vector(["banana"], 4, index)
     print("\nQuery vector:")
     print(query_vec)
 
@@ -183,5 +182,5 @@ if __name__ == "__main__":
     top_cosine = cosine_sim(query_vec, matrix, 4)
     print("\nCosine Similarity Result:")
     print("Top 5 dopcumets are:")
-    for doc in top:
+    for doc in top_cosine:
         print("Document " + str(doc + 1) + " (index " + str(doc) + ")")
