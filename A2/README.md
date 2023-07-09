@@ -159,101 +159,137 @@ Document 201
 Document 170
 
 ## Cosine Similarity Report:
-Positional Index:
-Read as --> 'word: [term frequency, {docId {position}, ...}]'
-apple: [3, {1: {2}, 2: {1}, 3: {9}}]
-with: [1, {2: {2}}]
-banana: [2, {1: {3}, 2: {2, 3}}]
-orange: [2, {2: {4}, 3: {8}}]
-
-Query = 'banana'
+We used the first 48 files from the dataset for this report. The query used for the ouputs was 'sherlock holmes'.
 
 ### Binary:
-TF-IDF Matrix:
-apple       with       banana       orange
-[[0.         0.         0.12493874 0.        ]
- [0.         0.30103    0.12493874 0.12493874]
- [0.         0.         0.         0.12493874]
- [0.         0.         0.         0.        ]]
+Pros:
+- Quick to process
+- Simple
+- ?
 
-Query vector:
-[0 0 1 0]
+Cons:
+- ?
+
+Output:
+Pros:
+- Quick to compute.
+
+TD-IDF Matrix
+[[1.20411998 0.77815125 0.98227123 ... 0.         0.         0.        ]
+ [0.         0.         0.         ... 0.         0.         0.        ]
+ [0.         0.         0.         ... 0.         0.         0.        ]
+ ...
+ [0.         0.         0.98227123 ... 0.         0.         0.        ]
+ [0.         0.77815125 0.         ... 0.         0.         0.        ]
+ [0.         0.         0.         ... 1.38021124 1.38021124 1.38021124]]
 
 Cosine Similarity Result:
 Top 5 dopcumets are:
-Document 1
-Document 2
+Document 5
 Document 3
-Document 4
+Document 10
+Document 14
+Document 41
 
 ### Raw Count
-TF-IDF Matrix:
-apple       with       banana       orange       
-[[0.         0.         0.12493874 0.        ]
- [0.         0.30103    0.24987747 0.12493874]
- [0.         0.         0.         0.12493874]
- [0.         0.         0.         0.        ]]
+Pros:
+- Quick to process
+- ?
 
-Query vector:
-[0 0 1 0]
+Cons:
+- ?
+
+Output:
+TD-IDF Matrix
+[[1.20411998 0.77815125 0.98227123 ... 0.         0.         0.        ]
+ [0.         0.         0.         ... 0.         0.         0.        ]
+ [0.         0.         0.         ... 0.         0.         0.        ]
+ ...
+ [0.         0.         0.98227123 ... 0.         0.         0.        ]
+ [0.         0.77815125 0.         ... 0.         0.         0.        ]
+ [0.         0.         0.         ... 1.38021124 1.38021124 1.38021124]]
 
 Cosine Similarity Result:
 Top 5 dopcumets are:
-Document 1
-Document 2
+Document 5
 Document 3
-Document 4
+Document 10
+Document 14
+Document 41
 
 ### Term Frequency
-TF-IDF Matrix:
-apple       with       banana       orange
-[[0.         0.         0.12493874 0.        ]
- [0.         0.150515   0.24987747 0.06246937]
- [0.         0.         0.         0.12493874]
- [0.         0.         0.         0.        ]]
+Pros:
+- ?
 
-Query vector:
-[0 0 1 0]
+Cons:
+- Process heavy (take a while to process)
+-?
+
+Output:
+
+TD-IDF Matrix
+[[1.20411998 0.77815125 0.98227123 ... 0.         0.         0.        ]
+ [0.         0.         0.         ... 0.         0.         0.        ]
+ [0.         0.         0.         ... 0.         0.         0.        ]
+ ...
+ [0.         0.         0.98227123 ... 0.         0.         0.        ]
+ [0.         0.77815125 0.         ... 0.         0.         0.        ]
+ [0.         0.         0.         ... 1.38021124 1.38021124 1.38021124]]
 
 Cosine Similarity Result:
 Top 5 dopcumets are:
-Document 1
-Document 2
+Document 5
 Document 3
-Document 4
+Document 10
+Document 14
+Document 41
 
 ### Log Normalization
-TF-IDF Matrix:
-apple       with       banana       orange
-[[0.         0.         0.03761031 0.        ]
- [0.         0.09061906 0.05961093 0.03761031]
- [0.         0.         0.         0.03761031]
- [0.         0.         0.         0.        ]]
+Pros:
+- Quick to process
 
-Query vector:
-[0 0 1 0]
+Cons:
+- Normalization?
+
+Output:
+TD-IDF Matrix
+[[0.36247623 0.23424687 0.29569311 ... 0.         0.         0.        ]
+ [0.         0.         0.         ... 0.         0.         0.        ]
+ [0.         0.         0.         ... 0.         0.         0.        ]
+ ...
+ [0.         0.         0.29569311 ... 0.         0.         0.        ]
+ [0.         0.23424687 0.         ... 0.         0.         0.        ]
+ [0.         0.         0.         ... 0.41548498 0.41548498 0.41548498]]
 
 Cosine Similarity Result:
 Top 5 dopcumets are:
-Document 1
-Document 2
+Document 5
 Document 3
-Document 4
+Document 10
+Document 14
+Document 41
 
 ### Double Normalization
-TF-IDF Matrix:
-apple       with       banana       orange
-[[0.         0.         0.12493874 0.        ]
- [0.         0.2257725  0.1874081  0.09370405]
- [0.         0.         0.         0.12493874]
- [0.         0.         0.         0.        ]]
+Pros:
+- ?
 
-Query vector:
-[0 0 1 0]
+Cons:
+- Process heavy (take a while to process)
+- ?
+
+Output:
+[[1.20411998 0.77815125 0.98227123 ... 0.         0.         0.        ]
+ [0.         0.         0.         ... 0.         0.         0.        ]
+ [0.         0.         0.         ... 0.         0.         0.        ]
+ ...
+ [0.         0.         0.98227123 ... 0.         0.         0.        ]
+ [0.         0.77815125 0.         ... 0.         0.         0.        ]
+ [0.         0.         0.         ... 1.38021124 1.38021124 1.38021124]]
 
 Cosine Similarity Result:
 Top 5 dopcumets are:
-Document 1
-Document 2
+Document 5
 Document 3
-Document 4
+Document 10
+Document 14
+Document 41
