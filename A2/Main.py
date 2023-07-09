@@ -185,7 +185,7 @@ if __name__ == "__main__":
                     bad_input = True
                 
                 # only continue if input is valid
-                if(bad_input != False):
+                if(bad_input == False):
                     # generate the Positional index if it wasn't previously
                     checkToLoadDataFiles()
 
@@ -225,7 +225,7 @@ if __name__ == "__main__":
                     bad_input = True
                 
                 # only continue if input is valid
-                if(bad_input != False):
+                if(bad_input == False):
                     # generate the Positional index if it wasn't previously
                     checkToLoadDataFiles()
 
