@@ -159,21 +159,18 @@ Document 201
 Document 170
 
 ## Cosine Similarity Report:
-We used the first 48 files from the dataset for this report. The query used for the ouputs was 'sherlock holmes'.
+NOTE/ASSUMPTION: We based the pros and cons on the performance of the scheme as there was no metric mentioned in the assignment outline.
+
+We used the first 48 files from the dataset for this report. The query used was 'sherlock holmes'.
 
 ### Binary:
 Pros:
-- Quick to process
-- Simple
-- ?
+- Quick to process (simple calculation)
 
 Cons:
-- ?
+- Didn't notice any cons.
 
 Output:
-Pros:
-- Quick to compute.
-
 TD-IDF Matrix
 [[1.20411998 0.77815125 0.98227123 ... 0.         0.         0.        ]
  [0.         0.         0.         ... 0.         0.         0.        ]
@@ -193,11 +190,10 @@ Document 41
 
 ### Raw Count
 Pros:
-- Quick to process
-- ?
+- Quick to process (simple calculation)
 
 Cons:
-- ?
+- Didn't notice any cons.
 
 Output:
 TD-IDF Matrix
@@ -219,11 +215,10 @@ Document 41
 
 ### Term Frequency
 Pros:
-- ?
+- Didn't notice any pros.
 
 Cons:
-- Process heavy (take a while to process)
--?
+- Process heavy (complex calculation that takes a while)
 
 Output:
 
@@ -246,10 +241,11 @@ Document 41
 
 ### Log Normalization
 Pros:
-- Quick to process
+- Quick to process (simple calculation)
+- Normalized values
 
 Cons:
-- Normalization?
+- Didn't notice any cons.
 
 Output:
 TD-IDF Matrix
@@ -271,11 +267,10 @@ Document 41
 
 ### Double Normalization
 Pros:
-- ?
+- Didn't notice any pros.
 
 Cons:
-- Process heavy (take a while to process)
-- ?
+- Process heavy (complex calculation that takes a while)
 
 Output:
 [[1.20411998 0.77815125 0.98227123 ... 0.         0.         0.        ]
