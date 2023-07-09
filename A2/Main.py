@@ -146,7 +146,7 @@ if __name__ == "__main__":
                 # generate the Positional index if it wasn't previously
                 checkToLoadDataFiles()
 
-                # create the phrase from the prepro
+                # create the phrase from the preprocessed words
                 phrase = ""
                 for word in processed_text.keys():
                     phrase += word + " "
