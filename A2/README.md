@@ -25,7 +25,7 @@ pip install -r .\requirements.txt
 ### Q1.
 Contains the positional index data structure along with preprocessing function and phrase queries functions.
 - The positional index structure allows the addition/updating of index's and can print the structure for debugging.
-- The phrase query functions
+- The phrase query functions there are two helper functions, we use proximity_position to find positional in the same document, then merge algorithm to combine the docID into one list then give an output.
 
 Assumption:
 In phrase queries function we made an assumption that the user want to search for phrase that exist within the documents so the input would take a phrase and then the output would show in format: {docID: [position of the word]} (the position would be in an order because each word needs to be next to each other). If user enter phrase that does not exist in the document it will return empty result. 
