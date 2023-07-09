@@ -157,3 +157,103 @@ Document 5
 Document 3
 Document 201
 Document 170
+
+## Cosine Similarity Report:
+Positional Index:
+Read as --> 'word: [term frequency, {docId {position}, ...}]'
+apple: [3, {1: {2}, 2: {1}, 3: {9}}]
+with: [1, {2: {2}}]
+banana: [2, {1: {3}, 2: {2, 3}}]
+orange: [2, {2: {4}, 3: {8}}]
+
+Query = 'banana'
+
+### Binary:
+TF-IDF Matrix:
+apple       with       banana       orange
+[[0.         0.         0.12493874 0.        ]
+ [0.         0.30103    0.12493874 0.12493874]
+ [0.         0.         0.         0.12493874]
+ [0.         0.         0.         0.        ]]
+
+Query vector:
+[0 0 1 0]
+
+Cosine Similarity Result:
+Top 5 dopcumets are:
+Document 1
+Document 2
+Document 3
+Document 4
+
+### Raw Count
+TF-IDF Matrix:
+apple       with       banana       orange       
+[[0.         0.         0.12493874 0.        ]
+ [0.         0.30103    0.24987747 0.12493874]
+ [0.         0.         0.         0.12493874]
+ [0.         0.         0.         0.        ]]
+
+Query vector:
+[0 0 1 0]
+
+Cosine Similarity Result:
+Top 5 dopcumets are:
+Document 1
+Document 2
+Document 3
+Document 4
+
+### Term Frequency
+TF-IDF Matrix:
+apple       with       banana       orange
+[[0.         0.         0.12493874 0.        ]
+ [0.         0.150515   0.24987747 0.06246937]
+ [0.         0.         0.         0.12493874]
+ [0.         0.         0.         0.        ]]
+
+Query vector:
+[0 0 1 0]
+
+Cosine Similarity Result:
+Top 5 dopcumets are:
+Document 1
+Document 2
+Document 3
+Document 4
+
+### Log Normalization
+TF-IDF Matrix:
+apple       with       banana       orange
+[[0.         0.         0.03761031 0.        ]
+ [0.         0.09061906 0.05961093 0.03761031]
+ [0.         0.         0.         0.03761031]
+ [0.         0.         0.         0.        ]]
+
+Query vector:
+[0 0 1 0]
+
+Cosine Similarity Result:
+Top 5 dopcumets are:
+Document 1
+Document 2
+Document 3
+Document 4
+
+### Double Normalization
+TF-IDF Matrix:
+apple       with       banana       orange
+[[0.         0.         0.12493874 0.        ]
+ [0.         0.2257725  0.1874081  0.09370405]
+ [0.         0.         0.         0.12493874]
+ [0.         0.         0.         0.        ]]
+
+Query vector:
+[0 0 1 0]
+
+Cosine Similarity Result:
+Top 5 dopcumets are:
+Document 1
+Document 2
+Document 3
+Document 4
