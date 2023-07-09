@@ -54,4 +54,29 @@ Log is always base 10 for any calculation.
 6. Once the selected function outputs its results you will return to step 3 where you can pick another function to run or exit the program.
 
 ## Program Example:
-To-Do
+### Phrase Query
+Options:
+0 = Exit program
+
+1 = Phrase Query
+
+2 = TD-IDF
+
+3 = Cosine
+
+Enter an option: 1
+Enter the query: sherlock holmes
+
+Creating Positional Index for the first time...
+Finished creating Positional Index.
+
+Documents that contain the phrase
+
+Read as { DocId: [Positions of the phrase], ...}
+{3: [7664, 7665], 8: [8081, 8082], 53: [1451, 1452], 86: [10331, 10332], 131: [6473, 6474], 206: [10004, 10005]}
+
+### TF-IDF
+Example...
+
+### Cosine Similarity
+Example...

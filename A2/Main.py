@@ -157,8 +157,9 @@ if __name__ == "__main__":
 
                 # output the result
                 print("Documents that contain the phrase\n")
-                print("Read as -->{ DocId: [Positions of the phrase], DocId [Positions of the phrase], etc.}")
+                print("Read as { DocId: [Positions of the phrase], ...}")
                 print(result_list)
+                print()
 
             case 2: # TD-IDF
                 # print options for TF-IDF
@@ -168,37 +169,44 @@ if __name__ == "__main__":
                 print("3 = Term Frequency\n")
                 print("4 = Log Normalization\n")
                 print("5 = Double Normalization\n")
-                option = input("Enter an option: ")
+                sub_option = input("Enter an option: ")
+
+                # indication to continue or stop
+                bad_input = False
 
                 # attempt to get int value from input
                 try:
-                    option_num = int(option)
+                    option_num = int(sub_option)
                 except:
                     print("That's not a number, please try again with a number")
-                    break
+                    bad_input = True
                 
                 # check valid option
-                if (option_num < 0 and option_num > 6):
+                if (bad_input == False and option_num < 0 and option_num > 6):
                     print("Invalid option selected!")
-                    break
+                    bad_input = True
+                
+                # only continue if input is valid
+                if(bad_input != False):
+                    # generate the Positional index if it wasn't previously
+                    checkToLoadDataFiles()
 
-                # generate the Positional index if it wasn't previously
-                checkToLoadDataFiles()
+                    # generate the TF-IDF matrix
+                    td_ifd_matrix = generate_tfidf_matrix(positionalIndex, len(documents), option_num)
+                    print("\td_ifd_matrix matrix:")
+                    print(td_ifd_matrix)
 
-                # generate the TF-IDF matrix
-                td_ifd_matrix = generate_tfidf_matrix(positionalIndex, len(documents), option_num)
-                print("\td_ifd_matrix matrix:")
-                print(td_ifd_matrix)
+                    # create query vector
+                    query_vec = query_vector(processed_text, len(positionalIndex.indexList), positionalIndex)
 
-                # create query vector
-                query_vec = query_vector(processed_text, len(positionalIndex.indexList), positionalIndex)
-
-                # find top 5 relevant documents
-                top_5 = relevant_doc(query_vec, td_ifd_matrix, len(documents))
-                print("\nTF-IDF Result:")
-                print("Top 5 dopcumets are:")
-                for doc in top_5:
-                    print("Document " + str(doc + 1))
+                    # find top 5 relevant documents
+                    top_5 = relevant_doc(query_vec, td_ifd_matrix, len(documents))
+                    print("\nTF-IDF Result:")
+                    print("Top 5 dopcumets are:")
+                    for doc in top_5:
+                        print("Document " + str(doc + 1))
+                else:
+                    print("Invalid input. Please make sure to enter a number between 1 and 5.\n")
 
             case 3: # Cosine
                 # print options for TF-IDF
@@ -208,36 +216,40 @@ if __name__ == "__main__":
                 print("3 = Term Frequency\n")
                 print("4 = Log Normalization\n")
                 print("5 = Double Normalization\n")
-                option = input("Enter an option: ")
+                sub_option = input("Enter an option: ")
 
                 # attempt to get int value from input
                 try:
-                    option_num = int(option)
+                    option_num = int(sub_option)
                 except:
                     print("That's not a number, please try again with a number")
-                    break
+                    bad_input = True
                 
                 # check valid option
-                if (option_num < 0 and option_num > 6):
+                if (bad_input == False and option_num < 0 and option_num > 6):
                     print("Invalid option selected!")
-                    break
+                    bad_input = True
+                
+                # only continue if input is valid
+                if(bad_input != False):
+                    # generate the Positional index if it wasn't previously
+                    checkToLoadDataFiles()
 
-                # generate the Positional index if it wasn't previously
-                checkToLoadDataFiles()
+                    # generate the TF-IDF matrix
+                    td_ifd_matrix = generate_tfidf_matrix(positionalIndex, len(documents), option_num)
 
-                # generate the TF-IDF matrix
-                td_ifd_matrix = generate_tfidf_matrix(positionalIndex, len(documents), option_num)
+                    # create query vector
+                    query_vec = query_vector(processed_text, len(positionalIndex.indexList), positionalIndex)
 
-                # create query vector
-                query_vec = query_vector(processed_text, len(positionalIndex.indexList), positionalIndex)
-
-                # find top 5 relevant documents
-                top_5 = cosine_sim(query_vec, td_ifd_matrix, len(documents))
-                print("\nCosine Similarity Result:")
-                print("Top 5 dopcumets are:")
-                for doc in top_5:
-                    print("Document " + str(doc + 1))
+                    # find top 5 relevant documents
+                    top_5 = cosine_sim(query_vec, td_ifd_matrix, len(documents))
+                    print("\nCosine Similarity Result:")
+                    print("Top 5 dopcumets are:")
+                    for doc in top_5:
+                        print("Document " + str(doc + 1))
+                else:
+                    print("Invalid input. Please make sure to enter a number between 1 and 5.\n")
 
             case _:
-                print("Invalid option")
+                print("Invalid option!")
                 
