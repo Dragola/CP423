@@ -28,34 +28,32 @@ def tf_idf(word: str, docID: int, pos_ind:PositionalIndex, document_count:int, w
     #term frequency
     elif weight_scheme == 3:
         tf = float(len(pos_ind.indexList[word][1][docID]))
-        value = 0
-        for word in pos_ind.indexList:
-            tf = tf/(value + pos_ind.indexList[word][1][docID])
+        for key_word in pos_ind.indexList:
+            # check if key_word isn't the same word and that the word is in the document
+            if (key_word != word and docID in pos_ind.indexList[key_word][1]):
+                tf = tf/(len(pos_ind.indexList[key_word][1][docID]))
     #log Normalization
     elif weight_scheme == 4:
         tf = math.log((1+len(pos_ind.indexList[word][1][docID])), 10)
     #double normalization
     elif weight_scheme == 5:
         tf = float(len(pos_ind.indexList[word][1][docID]))
-        max = float(len(pos_ind.indexList[word][1][docID]))
-        for word in pos_ind.indexList[word][1][docID]:
-            if pos_ind.indexList[word][1][docID] > max:
-                max = pos_ind.indexList[word][1][docID]
-            tf = tf/max   
-        tf = 0.5+0.5 *tf       
+        max = 0.0
+        for key_word in pos_ind.indexList:
+            # check if key_word isn't the same word and that the word is in the document
+            if (key_word != word and docID in pos_ind.indexList[key_word][1]):
+                # check for max
+                if (len(pos_ind.indexList[key_word][1][docID]) > max):
+                    max = len(pos_ind.indexList[key_word][1][docID])
+        tf = tf/max
+        tf = 0.5 + (0.5 * tf)   
     #none of the above options returns an error (no need if we prevent before calling)
     else: 
         print("Error: that is not a valid weight scheme.")
         return -1
-
-    #print(word + "| doc= " + str(docID))
-    #print("tf= " + str(tf))
-    #print("document_count= " + str(document_count) + ", word freq= " + str(pos_ind.indexList[word][0]))
     
     idf = float(document_count)/float((pos_ind.indexList[word][0]) + 1)
-    #print("idf= " + str(idf))
-    result = tf*(math.log(idf,2))
-    #print("tf-idf= " + str(result) + "\n")
+    result = tf*(math.log(idf,10))
     return result
 
 #populate matrix with tfidf generated values
@@ -82,12 +80,6 @@ def query_vector(query: list, term_count, pos_ind:PositionalIndex):
             query_vector[col] = 1
         col += 1
     return query_vector
-
-#calculate tfidf score by multiplying query vector with the tfidf values
-def calculate_tf_idf (query_vector, word, docID, pos_ind:PositionalIndex, document_count:int, weight_scheme: int):
-    value = tf_idf(word, docID, pos_ind, document_count, weight_scheme)
-    result = value * query_vector
-    return (result)
 
 #get top 5 relevent documents by returning top 5 tf-idf scores
 def relevant_doc(query_vector, tf_idf_matrix, document_count: int): 
@@ -167,7 +159,7 @@ if __name__ == "__main__":
     index.printIndexList()
 
     # generate TF-IDF matrix
-    matrix = generate_tfidf_matrix(index, 4, 2)
+    matrix = generate_tfidf_matrix(index, 4, 5)
     print("\nTF-IDF Matrix:")
     print(index.indexList.keys())
     print(matrix)

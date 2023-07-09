@@ -25,6 +25,7 @@ pip install -r .\requirements.txt
 ### Q1.
 Contains the positional index data structure along with preprocessing function and phrase queries functions.
 
+Assumption:
 In phrase queries function we made an assumption that the user want to search for phrase that exist within the documents so the input would take a phrase and then the output would show in format: (docID, {docID: [position of the word]}) (the position would be in an order because each word needs to be next to each other). If user enter phrase that does not exist in the document it will return empty result. 
 
 ### Q2.
@@ -46,9 +47,9 @@ Log is always base 10 for any calculation.
 5. At this point phrase query will process and output the result. If TF-IDF or Cosine Similatiry was picked then you will be asked to pick which weight scheme to use.
     - 1 = Binary
     - 2 = Raw Count
-    - 3 = Term Frequency
+    - 3 = Term Frequency (NOTE: It will take a few minutes or longer to process this scheme based on the vocabulary size.)
     - 4 = Log Normalization
-    - 5 = Double Normalization
+    - 5 = Double Normalization (NOTE: It will take a few minutes or longer to process this scheme based on the vocabulary size.)
     - Enter a number and press enter to select the weight schemna. Once processed the results are outputed.
 6. Once the selected function outputs its results you will return to step 3 where you can pick another function to run or exit the program.
 
