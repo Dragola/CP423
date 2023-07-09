@@ -191,8 +191,6 @@ if __name__ == "__main__":
 
                     # generate the TF-IDF matrix
                     td_ifd_matrix = generate_tfidf_matrix(positionalIndex, len(documents), option_num)
-                    print("\td_ifd_matrix matrix:")
-                    print(td_ifd_matrix)
 
                     # create query vector
                     query_vec = query_vector(processed_text, len(positionalIndex.indexList), positionalIndex)
