@@ -56,55 +56,55 @@ def createPositionalIndex():
     return invertedIndex
 
 # output based on lecture slide (Week 2- Part 2 SLide 9) #DEBUG
-def writePositionalIndex():
-    stream = open("./positionalIndex.txt", "w")
+# def writePositionalIndex():
+#     stream = open("./positionalIndex.txt", "w")
 
 
-    # print document and their ID's
-    for docID in documents:
-        stream.write(documents[docID] + "| docID= " + str(docID) + "\n")
+#     # print document and their ID's
+#     for docID in documents:
+#         stream.write(documents[docID] + "| docID= " + str(docID) + "\n")
 
-    # space for index
-    stream.write("\n")
+#     # space for index
+#     stream.write("\n")
 
-    for word in positionalIndex.indexList:
-        # print first line (word/token + document frequency)
-        firstLine = "{" + word + ": (" + str(positionalIndex.indexList[word][0]) + ", {\n"
-        stream.write(firstLine)
+#     for word in positionalIndex.indexList:
+#         # print first line (word/token + document frequency)
+#         firstLine = "{" + word + ": (" + str(positionalIndex.indexList[word][0]) + ", {\n"
+#         stream.write(firstLine)
 
-        # determine what's the last element in the docID dict (to determine line format)
-        docDict: dict = positionalIndex.indexList[word][1]
-        docDictToList: list = list(docDict.keys())
-        lastElement = docDictToList[-1]
+#         # determine what's the last element in the docID dict (to determine line format)
+#         docDict: dict = positionalIndex.indexList[word][1]
+#         docDictToList: list = list(docDict.keys())
+#         lastElement = docDictToList[-1]
 
-        # print each docId and positional list
-        for doc in positionalIndex.indexList[word][1]:
-            # first to second last element in list
-            if doc != lastElement:
-                docLine = "doc" + str(doc) + ": [" + str(positionalIndex.indexList[word][1][doc]) + "],\n"
-            # last element in list
-            else:
-                docLine = "doc" + str(doc) + ": [" + str(positionalIndex.indexList[word][1][doc]) + "]} )\n"
-            stream.write(docLine)
+#         # print each docId and positional list
+#         for doc in positionalIndex.indexList[word][1]:
+#             # first to second last element in list
+#             if doc != lastElement:
+#                 docLine = "doc" + str(doc) + ": [" + str(positionalIndex.indexList[word][1][doc]) + "],\n"
+#             # last element in list
+#             else:
+#                 docLine = "doc" + str(doc) + ": [" + str(positionalIndex.indexList[word][1][doc]) + "]} )\n"
+#             stream.write(docLine)
 
-        # write last line for word/token
-        stream.write("}\n\n")
-    stream.close()
+#         # write last line for word/token
+#         stream.write("}\n\n")
+#     stream.close()
 
 def checkToLoadDataFiles():
     global positionalIndex
 
     # generate positional index only if it wasn't generated previously
     if (positionalIndex == None):
-        print("Creating Positional Index...")
+        print("\nCreating Positional Index for the first time...")
 
         # read all the files and create the inverted index
         positionalIndex = createPositionalIndex()
 
-        print("Finished creating Positional Index.")
+        print("Finished creating Positional Index.\n")
 
         # write index to txt file #DEBUG
-        writePositionalIndex()
+        #writePositionalIndex()
 
 '''
 Main function
@@ -134,7 +134,7 @@ if __name__ == "__main__":
         phrase = input("Enter the query: ")
 
         # preprocess the phrase
-        processed_text = preprocess_text(phrase)
+        processed_text: dict = preprocess_text(phrase)
 
         match option_num:
             case -1: # no number provided (skip)
@@ -147,12 +147,18 @@ if __name__ == "__main__":
                 # generate the Positional index if it wasn't previously
                 checkToLoadDataFiles()
 
+                # create the phrase from the prepro
+                phrase = ""
+                for word in processed_text.keys():
+                    phrase += word + " "
+
                 # run the function for phrase query
-                result_list = search_phrase(positionalIndex.indexList, processed_text)
+                result_list = search_phrase(positionalIndex.indexList, phrase)
 
                 # output the result
-                # TODO- Should print the position the phrase starts at.
-                print("Documents that contain the phrase" + result_list)
+                print("Documents that contain the phrase\n")
+                print("Read as -->{ DocId: [Positions of the phrase], DocId [Positions of the phrase], etc.}")
+                print(result_list)
 
             case 2: # TD-IDF
                 # print options for TF-IDF
@@ -171,6 +177,7 @@ if __name__ == "__main__":
                     print("That's not a number, please try again with a number")
                     break
                 
+                # check valid option
                 if (option_num < 0 and option_num > 6):
                     print("Invalid option selected!")
                     break
@@ -185,15 +192,13 @@ if __name__ == "__main__":
 
                 # create query vector
                 query_vec = query_vector(processed_text, len(positionalIndex.indexList), positionalIndex)
-                print("\nQuery vector:")
-                print(query_vec)
 
                 # find top 5 relevant documents
                 top_5 = relevant_doc(query_vec, td_ifd_matrix, len(documents))
                 print("\nTF-IDF Result:")
                 print("Top 5 dopcumets are:")
                 for doc in top_5:
-                    print("Document " + str(doc + 1) + " (index " + str(doc) + ")")
+                    print("Document " + str(doc + 1))
 
             case 3: # Cosine
                 # print options for TF-IDF
@@ -212,6 +217,7 @@ if __name__ == "__main__":
                     print("That's not a number, please try again with a number")
                     break
                 
+                # check valid option
                 if (option_num < 0 and option_num > 6):
                     print("Invalid option selected!")
                     break
@@ -224,15 +230,13 @@ if __name__ == "__main__":
 
                 # create query vector
                 query_vec = query_vector(processed_text, len(positionalIndex.indexList), positionalIndex)
-                print("\nQuery vector:")
-                print(query_vec)
 
                 # find top 5 relevant documents
                 top_5 = cosine_sim(query_vec, td_ifd_matrix, len(documents))
                 print("\nCosine Similarity Result:")
                 print("Top 5 dopcumets are:")
                 for doc in top_5:
-                    print("Document " + str(doc + 1) + " (index " + str(doc) + ")")
+                    print("Document " + str(doc + 1))
 
             case _:
                 print("Invalid option")

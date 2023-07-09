@@ -47,11 +47,8 @@ def tf_idf(word: str, docID: int, pos_ind:PositionalIndex, document_count:int, w
                     max = len(pos_ind.indexList[key_word][1][docID])
         tf = tf/max
         tf = 0.5 + (0.5 * tf)   
-    #none of the above options returns an error (no need if we prevent before calling)
-    else: 
-        print("Error: that is not a valid weight scheme.")
-        return -1
     
+    # calculate idf
     idf = float(document_count)/float((pos_ind.indexList[word][0]) + 1)
     result = tf*(math.log(idf,10))
     return result
@@ -93,14 +90,8 @@ def relevant_doc(query_vector, tf_idf_matrix, document_count: int):
         scores[column] = score
         column += 1
 
-    print("\nScores:")
-    print(scores)
-
     # determine the order of the scores (sorts lowest to highest)
     sorted_indecies = np.argsort(-scores)
-
-    print("\nsorted_indecies:")
-    print(sorted_indecies)
 
     # reverse the index's from the sorted list and grab the first 5 (aka 5 highest relevant docID's)
     top_5_doc = sorted_indecies[:5]
@@ -121,14 +112,8 @@ def cosine_sim(query_vector, tfidf_matrix, document_count: int):
         cosine_scores[column] = score
         column += 1
 
-    print("\nCosine Scores:")
-    print(cosine_scores)
-
     # determine the order of the scores (sorts lowest to highest)
     sorted_indecies = np.argsort(-cosine_scores)
-
-    print("\nsorted_indecies:")
-    print(sorted_indecies)
 
     # reverse the index's from the sorted list and grab the first 5 (aka 5 highest relevant docID's)
     top_5_doc = sorted_indecies[:5]
@@ -136,49 +121,49 @@ def cosine_sim(query_vector, tfidf_matrix, document_count: int):
     return top_5_doc
     
 
-if __name__ == "__main__":
+# if __name__ == "__main__":
     
-    #Testing
-    print("Main for Q2")
+#     #Testing
+#     print("Main for Q2")
     
-    print("Testing phrase queries...\n")
-    index = PositionalIndex()
+#     print("Testing phrase queries...\n")
+#     index = PositionalIndex()
 
-    # Add some sample data
-    index.addIndex("apple", 1, 2)
-    index.addIndex("apple", 2, 1)
-    index.addIndex("apple", 3, 9)
-    index.addIndex("with", 2, 2)
-    index.addIndex("banana", 1, 3)
-    index.addIndex("banana", 2, 2)
-    index.addIndex("banana", 2, 3)
-    index.addIndex("orange", 2, 4)
-    index.addIndex("orange", 3, 8)
+#     # Add some sample data
+#     index.addIndex("apple", 1, 2)
+#     index.addIndex("apple", 2, 1)
+#     index.addIndex("apple", 3, 9)
+#     index.addIndex("with", 2, 2)
+#     index.addIndex("banana", 1, 3)
+#     index.addIndex("banana", 2, 2)
+#     index.addIndex("banana", 2, 3)
+#     index.addIndex("orange", 2, 4)
+#     index.addIndex("orange", 3, 8)
 
-    # print positional index structure
-    index.printIndexList()
+#     # print positional index structure
+#     index.printIndexList()
 
-    # generate TF-IDF matrix
-    matrix = generate_tfidf_matrix(index, 4, 5)
-    print("\nTF-IDF Matrix:")
-    print(index.indexList.keys())
-    print(matrix)
+#     # generate TF-IDF matrix
+#     matrix = generate_tfidf_matrix(index, 4, 5)
+#     print("\nTF-IDF Matrix:")
+#     print(index.indexList.keys())
+#     print(matrix)
     
-    # create query vector
-    query_vec = query_vector(["banana"], 4, index)
-    print("\nQuery vector:")
-    print(query_vec)
+#     # create query vector
+#     query_vec = query_vector(["banana"], 4, index)
+#     print("\nQuery vector:")
+#     print(query_vec)
 
-    # test TD-IDF
-    top = relevant_doc(query_vec, matrix, 4)
-    print("\nTF-IDF Result:")
-    print("Top 5 dopcumets are:")
-    for doc in top:
-        print("Document " + str(doc + 1) + " (index " + str(doc) + ")")
+#     # test TD-IDF
+#     top = relevant_doc(query_vec, matrix, 4)
+#     print("\nTF-IDF Result:")
+#     print("Top 5 dopcumets are:")
+#     for doc in top:
+#         print("Document " + str(doc + 1) + " (index " + str(doc) + ")")
 
-    # test cosine similarity
-    top_cosine = cosine_sim(query_vec, matrix, 4)
-    print("\nCosine Similarity Result:")
-    print("Top 5 dopcumets are:")
-    for doc in top_cosine:
-        print("Document " + str(doc + 1) + " (index " + str(doc) + ")")
+#     # test cosine similarity
+#     top_cosine = cosine_sim(query_vec, matrix, 4)
+#     print("\nCosine Similarity Result:")
+#     print("Top 5 dopcumets are:")
+#     for doc in top_cosine:
+#         print("Document " + str(doc + 1) + " (index " + str(doc) + ")")
