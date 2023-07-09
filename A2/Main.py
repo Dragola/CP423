@@ -178,12 +178,10 @@ if __name__ == "__main__":
                 try:
                     option_num = int(sub_option)
                 except:
-                    print("That's not a number, please try again with a number")
                     bad_input = True
                 
                 # check valid option
                 if (bad_input == False and option_num < 0 and option_num > 6):
-                    print("Invalid option selected!")
                     bad_input = True
                 
                 # only continue if input is valid
@@ -222,12 +220,10 @@ if __name__ == "__main__":
                 try:
                     option_num = int(sub_option)
                 except:
-                    print("That's not a number, please try again with a number")
                     bad_input = True
                 
                 # check valid option
                 if (bad_input == False and option_num < 0 and option_num > 6):
-                    print("Invalid option selected!")
                     bad_input = True
                 
                 # only continue if input is valid
