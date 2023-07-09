@@ -29,7 +29,7 @@ Assumption:
 In phrase queries function we made an assumption that the user want to search for phrase that exist within the documents so the input would take a phrase and then the output would show in format: (docID, {docID: [position of the word]}) (the position would be in an order because each word needs to be next to each other). If user enter phrase that does not exist in the document it will return empty result. 
 
 ### Q2.
-Contains the TF, TF-IDF, and Cosine similarity functions.
+Contains the TF, TF-IDF, and Cosine similarity functions. Q2 generates the matrix with its appropriate size and fills it with zeros. There's a function to calculate the TF-IDF numbers then populate the existing matrix with those numbers. The query vector is then generated in a separate function. To calculate the tf-idf score we need the tf-idf numbers from the matrix multiplied by the query vector generated (or more specifically the dot product between the two values). There's also another function that returns the top 5 most relevant documents based on the top 5 highest calculated tf-idf scores.
 
 Assumption:
 Log is always base 10 for any calculation. 
