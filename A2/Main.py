@@ -214,6 +214,9 @@ if __name__ == "__main__":
                 print("5 = Double Normalization\n")
                 sub_option = input("Enter an option: ")
 
+                # indication to continue or stop
+                bad_input = False
+
                 # attempt to get int value from input
                 try:
                     option_num = int(sub_option)
