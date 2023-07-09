@@ -105,10 +105,13 @@ def relevant_doc(query_vector, tf_idf_matrix, document_count: int):
     print(scores)
 
     # determine the order of the scores (sorts lowest to highest)
-    sorted_indecies = np.argsort(scores)
+    sorted_indecies = np.argsort(-scores)
+
+    print("\nsorted_indecies:")
+    print(sorted_indecies)
 
     # reverse the index's from the sorted list and grab the first 5 (aka 5 highest relevant docID's)
-    top_5_doc = sorted_indecies[::-1][-5:]
+    top_5_doc = sorted_indecies[:5]
 
     return top_5_doc
 
@@ -130,10 +133,13 @@ def cosine_sim(query_vector, tfidf_matrix, document_count: int):
     print(cosine_scores)
 
     # determine the order of the scores (sorts lowest to highest)
-    sorted_indecies = np.argsort(cosine_scores)
+    sorted_indecies = np.argsort(-cosine_scores)
+
+    print("\nsorted_indecies:")
+    print(sorted_indecies)
 
     # reverse the index's from the sorted list and grab the first 5 (aka 5 highest relevant docID's)
-    top_5_doc = sorted_indecies[::-1][-5:]
+    top_5_doc = sorted_indecies[:5]
 
     return top_5_doc
     
