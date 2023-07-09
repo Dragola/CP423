@@ -14,7 +14,7 @@
 Due Date/Submission Date: July 9th, 2023, 11:59pm
 
 ## Summary:
-To-Do
+The purpose of this assignment was to create a functioning program to searching up phrase queries in a dataset in Python and then ranking them by using TF-IDF. This involved preprocessing the data, implementing an positional index data structure, taking input from the user, implementing a phrase queries function, testing the code for errors, and running a set of queries that return data from the dataset.
 
 ## Requirments:
 To run this project you will need to run the following command to install the required modules/libraries:
