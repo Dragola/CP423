@@ -88,8 +88,11 @@ Options:
 3 = Cosine
 
 Enter an option: 2
+
 Enter the query: sherlock holmes
+
 Pick an option for the TF weight scheme:
+
 1 = Binary
 
 2 = Raw count
@@ -107,6 +110,7 @@ Finished creating Positional Index.
 
 
 TF-IDF Result:
+
 Top 5 dopcumets are:
 Document 189
 Document 213
@@ -125,8 +129,11 @@ Options:
 3 = Cosine
 
 Enter an option: 3
+
 Enter the query: sherlock holmes
+
 Pick an option for the TF weight scheme:
+
 1 = Binary
 
 2 = Raw count
@@ -144,6 +151,7 @@ Finished creating Positional Index.
 
 
 Cosine Similarity Result:
+
 Top 5 dopcumets are:
 Document 238
 Document 5
