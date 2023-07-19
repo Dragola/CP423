@@ -6,13 +6,13 @@ import time
 import os
 
 # TODO- Un-comment once we're ready to test on the actual web-page
-# Retrieve the specified webpage as raw HTML using the requests library
+# Part 1- Retrieve the specified webpage as raw HTML using the requests library
 #url = "https://en.wikipedia.org/wiki/List_of_Canadian_provinces_and_territories_by_historical_population"
 #response = requests.get(url)
 #html_content = response.content
 
 
-# Decode the HTML into a tree-structured Python object with the BeautifulSoup library
+# Part 2- Decode the HTML into a tree-structured Python object with the BeautifulSoup library
 # TODO- Un-comment once we're ready to test on the actual web-page
 #soup = BeautifulSoup(html_content, 'html.parser')
 
@@ -20,10 +20,10 @@ import os
 with open("./List of Canadian provinces and territories by historical population - Wikipedia.html", encoding='utf8') as file:
     soup = BeautifulSoup(file, 'html.parser')
 
-# Utilize BeautifulSoup to identify and extract only the tables we're interested in
+# Part 3- Utilize BeautifulSoup to identify and extract only the tables we're interested in
 tables = soup.find_all('table', class_='wikitable')
 
-# Merge the tables, sanitize the text, and transform them into a single Python dictionary
+# Part 4- Merge the tables, sanitize the text, and transform them into a single Python dictionary
 data = {}
 i = 0
 for table in tables:
@@ -32,7 +32,7 @@ for table in tables:
     data[i] = df.to_dict()
     i+=1
 
-# Construct a pandas dataframe out of this dictionary
+# Part 5- Construct a pandas dataframe out of this dictionary
 dfs = []
 for i, table_data in data.items():
     df = pd.DataFrame(table_data)
@@ -45,10 +45,13 @@ merged_df = pd.merge(dfs[0], dfs[1], on='Name', how='outer')
 for i in range(2, len(dfs)):
     merged_df = pd.merge(merged_df, dfs[i], on='Name', how='outer')
 
-# Final Database
+# Final Database (what is this for?)
 merged_df
 
-# Part 7- Generate list of all hyperlinks embedded within the tables
+# Part 6- Locate all h2 elements on the HTML page and display their text content
+
+
+# Part 7- Generate a list of all the hyperlinks embedded within the tables
 links = soup.find_all("a", {"href": True, "title": True})
 
 link_list = []
@@ -72,9 +75,9 @@ for data in links:
             link_list.append(data['href'])
 
 # print the list of links- DEBUG
-print(link_list)
+#print(link_list)
 
-# Part 8- Download webpages from previous step
+# Part 8- Download every webpage by traversing the links included in the list created in the previous step
 # the domain for the URL
 domain = "https://en.wikipedia.org/"
 
