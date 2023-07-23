@@ -1,7 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import re
 import time
 import os
 
@@ -38,8 +37,10 @@ merged_df = pd.merge(dfs[0], dfs[1], on='Name', how='outer')
 for i in range(2, len(dfs)):
     merged_df = pd.merge(merged_df, dfs[i], on='Name', how='outer')
 
-# Final Database (what is this for?)
-merged_df
+# print the final database
+print("Merged Pandas Table:")
+print(merged_df)
+print("\n")
 
 # Part 6- Locate all h2 elements on the HTML page and display their text content
 headers = soup.find_all("h2")
@@ -57,7 +58,7 @@ for header in headers:
     header_list.append(headline_text_split[0])
 
 # print header texts
-print("Headers:")
+print("H2 elements (aka headers):")
 for text in header_list:
     print(text)
 print("\n")
