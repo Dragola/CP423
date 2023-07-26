@@ -27,6 +27,10 @@ pip install -r .\requirements.txt
 ### Q1.
 This file is the entire assignment containing all 8 parts of Q1. First, the specidied wikipedia webpage is retrieved. Next, it pulls table data and combines them into one pandas database framework which is then printed. After it pulls all the h2 (header) elements. Finally, it grads the hyperlinks that are embeded within the tables and downloads them.
 
+How to read the poandas table:
+- The column headers are the same as the headers from the tables just combined into one large table. If you look at each tables on the wikipedia page you can see how they all start with the province name then followed by the years (population of the province that year).
+- For example if you look at the row for "Lower Canada" in the example below it reads that there was a population of 14000 in 1700, 29000 in 1750, ..., and 450000 in 1800. The rest of the row has NaN as the original table had no colums for those years so there's no data.
+
 Assumptions:
 1. Part 7- Any reference links who's title was in the merged table database was considered valid and is retrieved in Part 8.
 
