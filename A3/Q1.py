@@ -87,7 +87,7 @@ for data in links:
             link_list.append(data['href'])
 
 # print the retrieved links to indicate what webpages will be downloaded
-print("Reference links retrieved that will be downloaded:")
+print("Hyperlinks retrieved that will be downloaded next:")
 for link in link_list:
     print(link)
 print("\n")
@@ -102,6 +102,8 @@ folder = "./webpages"
 # create directory for webpages
 if (os.path.exists("./webpages") == False):
     os.mkdir("./webpages")
+
+print("Downloading webpages, please wait...\n")
 
 i = 0
 # iterate over each link

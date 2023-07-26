@@ -25,7 +25,7 @@ pip install -r .\requirements.txt
 
 ## Summary of files:
 ### Q1.
-The entire Q1 of the assignment. The file includes all 8 parts to Q1...
+This file is the entire assignment containing all 8 parts of Q1. First, the specidied wikipedia webpage is retrieved. Next, it pulls table data and combines them into one pandas database framework which is then printed. After it pulls all the h2 (header) elements. Finally, it grads the hyperlinks that are embeded within the tables and downloads them.
 
 Assumptions:
 1. Part 7- Any reference links who's title was in the merged table database was considered valid and is retrieved in Part 8.
@@ -70,7 +70,7 @@ Contents
 Notes
 
 
-Reference links retrieved that will be downloaded:
+Hyperlinks retrieved that will be downloaded next:
 /wiki/Nunavut
 /wiki/Northwest_Territories
 /wiki/Lower_Canada
@@ -88,5 +88,7 @@ Reference links retrieved that will be downloaded:
 /wiki/Yukon
 /wiki/Canada
 
+
+Downloading webpages, please wait...
 
 Webpages downloaded. Please check the ./webpages folder.
